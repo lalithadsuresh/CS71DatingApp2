@@ -3,6 +3,7 @@ import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 import axios from "axios";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const AuthenticatePage = () => {
@@ -20,6 +21,7 @@ const AuthenticatePage = () => {
                     const isRegistered = res.data.isRegistered;
 
                     if (isRegistered) {
+                        navigate('/')
                         console.log(isRegistered);
                     }
 
