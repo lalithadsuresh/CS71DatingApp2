@@ -6,15 +6,25 @@ import Settings from './components/Settings';
 import LoginButton from './components/LoginButton';
 import LogoutButton from './components/LogoutButton';
 import AuthenticatePage from './components/AuthenticatePage';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import Navbar from './components/Navbar';
 
 
 function App() {
   return (
 
-    <main className='column'>
-      <AuthenticatePage />
+    <Router>
+      <Navbar />
+      <Routes>
 
-    </main>
+        <Route path = '/' exact />
+        <Route path="/homepage" element={<Homepage />} />
+        <Route path="/matches" element={<Matches />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/registration" element={<AuthenticatePage />} />
+      </Routes>
+    </Router>
+
   );
 }
 
