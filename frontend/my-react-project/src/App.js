@@ -7,6 +7,7 @@ import Profile from './components/Profile';
 import LoginButton from './components/LoginButton';
 import LogoutButton from './components/LogoutButton';
 import AuthenticatePage from './components/AuthenticatePage';
+import Form from './components/Form';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Navbar from './components/Navbar';
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/registration" element={<AuthenticatePage />} />
+        <Route path="/form" element={<Form />} />
       </Routes>
     </Router>
 
