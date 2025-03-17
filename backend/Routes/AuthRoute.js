@@ -30,6 +30,10 @@ router.post('/sync', async (req, res) => {
 
 router.post('/registered', async (req, res) => {
 
+
+    const { auth0UserId } = req.body;
+
+
     try {
         const userProfile = await User.findOne({auth0UserId});
         res.json({isRegistered: userProfile.isRegistered});
