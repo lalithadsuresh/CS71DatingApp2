@@ -21,7 +21,6 @@ const AuthenticatePage = () => {
                     const isRegistered = res.data.isRegistered;
 
                     if (isRegistered) {
-                        navigate('/')
                         console.log(isRegistered);
                     }
 
