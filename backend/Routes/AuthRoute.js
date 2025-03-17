@@ -7,10 +7,18 @@ router.post('/sync', async (req, res) => {
     try {
 
         const { auth0UserId } = req.body;
+        let user = await User.findOne({ auth0UserId});
+        if (!user) {
+            user = new User({ auth0UserId});
+            await user.save();
+        }
+
+
         console.log(auth0UserId);
         res.status(200).send('Received');
 
     }
+    
     
     catch (err) {
 
