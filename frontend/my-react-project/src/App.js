@@ -7,6 +7,8 @@ import Profile from './components/Profile';
 import LoginButton from './components/LoginButton';
 import LogoutButton from './components/LogoutButton';
 import AuthenticatePage from './components/AuthenticatePage';
+import Registration from './components/Registration';
+import DecidingPage from './components/DecidingPage';
 import Form from './components/Form';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Navbar from './components/Navbar';
@@ -20,12 +22,13 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route path = '/' exact />
+        <Route path = "/" element={<DecidingPage />} />
         <Route path="/homepage" element={<Homepage />} />
         <Route path="/matches" element={<Matches />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="/registration" element={<AuthenticatePage />} />
+        <Route path="/login" element={<AuthenticatePage />} />
+        <Route path="/registration" element={<Registration />} />
         <Route path="/form" element={<Form />} />
       </Routes>
     </Router>
