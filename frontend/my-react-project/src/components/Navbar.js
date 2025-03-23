@@ -1,5 +1,7 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom';
+import LogoutButton from './LogoutButton';
+import { useAuth0 } from '@auth0/auth0-react';
 
 
 function Navbar() {
@@ -39,6 +41,9 @@ function Navbar() {
                     <Link to='/Settings' className='nav-links' onClick={closeMobileMenu}>
                         Settings
                     </Link>
+                </li>
+                <li className='nav-item'>
+                    <LogoutButton />
                 </li>
             </ul>
             

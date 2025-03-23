@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 const AuthenticatePage = () => {
 
     const { isAuthenticated, user } = useAuth0();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (isAuthenticated && user) {
@@ -16,15 +17,19 @@ const AuthenticatePage = () => {
                 auth0UserId: user.sub,
             })
             .then((res) => {
-                axios.post('http://localhost:5000/api/users/registered')
+                axios.post('http://localhost:5000/api/users/registered', {
+                    auth0UserId: user.sub
+                })
                 .then(() => {
                     const isRegistered = res.data.isRegistered;
 
                     if (isRegistered) {
+                        navigate('/matches');
                         console.log(isRegistered);
                     }
 
                     else {
+                        navigate('/registration');
                         console.log(isRegistered);
                     }
 
