@@ -10,6 +10,8 @@ import AuthenticatePage from './components/AuthenticatePage';
 import Form from './components/Form';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Navbar from './components/Navbar';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 function App() {
