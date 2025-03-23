@@ -6,8 +6,12 @@ const Schema = mongoose.Schema;
 const UserSchema = new mongoose.Schema({
 
     auth0UserId: {type: String, required: true},
-    isRegistered: {type: Boolean, default: false}
+    isRegistered: {type: Boolean, default: false},
     
+    //profile info
+    name: {type: String},
+    age: {type: Number}
+
 
 })
 
