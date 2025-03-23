@@ -36,10 +36,49 @@ router.post('/registered', async (req, res) => {
 
     try {
         const userProfile = await User.findOne({auth0UserId});
-        res.json({isRegistered: userProfile.isRegistered});
+
+        if (!userProfile) {
+            return res.status(404).json({ error: 'User not found '});
+        }
+
+        const isRegistered = userProfile.name && userProfile.name;
+
+
+        res.json({isRegistered: !!isRegistered});
     }
 
     catch (err) {
+
+        console.error(err);
+
+    }
+
+
+});
+
+router.post('/register', async (req, res) => {
+
+
+    const { name, age, auth0UserId } = req.body;
+
+
+    try {
+
+        const updatedUser = await User.findOneAndUpdate(
+            { auth0UserId: auth0UserId },
+            { name: name, age: age},
+            { new: true}
+
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "No user"});
+        }
+
+        res.status(200).json({ message: "User updated successfully "});
+
+
+    } catch (err) {
 
         console.error(err);
 
