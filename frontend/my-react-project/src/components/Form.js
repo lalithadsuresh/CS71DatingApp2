@@ -93,9 +93,9 @@ const Form = () => {
           <input type="text" className="form-control" id="job" />
         </div>
 
-        <h4 className="mt-5 mb-4">Questions</h4>
+        {/* <h4 className="mt-5 mb-4">Questions</h4> */}
 
-        {[
+        {/* {[
           "What are your hobbies?",
           "What are your dealbreakers?",
           "What is your best joke?",
@@ -117,7 +117,7 @@ const Form = () => {
             <label htmlFor={`question-${idx}`}>{question}</label>
             <textarea className="form-control" id={`question-${idx}`} rows="2" />
           </div>
-        ))}
+        ))} */}
 
         <button type="submit" className="btn btn-primary mt-4">Submit</button>
       </form>
