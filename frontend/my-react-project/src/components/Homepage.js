@@ -30,8 +30,8 @@ const Homepage = () => {
 
   }, [user, isLoading]);
   
-  /*
 
+  /*
       <div className="container">
       <h1 className="title">Unmasked</h1>
       <p className="subtitle">No pictures, just personality - unmask your true connection.</p>
@@ -44,14 +44,13 @@ const Homepage = () => {
         <input className="question" type="text" placeholder="Question 4" />
       </div>
       
+      */ 
       {/* <div className="nav-links"> */}
         {/* <a href="Matches.js" className="link">Your Matches</a> */}
         {/* <a href="Settings.js" className="link">Settings</a> */}
         {/* <a href="Profile.js" className="link">Profile</a> */}
         {/* <button className="match-button">Match</button> */}
       {/* </div>  */}
-
-  */
   
 
   // get all users in database that the current user hasn't swiped on
