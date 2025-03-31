@@ -17,9 +17,9 @@ function Navbar() {
 // Add link to Logo here to be at the top
                 </link> */}
       <div className="nav-links">
-        <a href="Matches.js" className="link">Your Matches</a>
-        <a href="Settings.js" className="link">Settings</a>
-        <a href="Profile.js" className="link">Profile</a>
+        <a href="Matches" className="link">Your Matches</a>
+        <a href="Settings" className="link">Settings</a>
+        <a href="Profile" className="link">Profile</a>
         <button className="match-button" onClick={() => window.location.href = "\homepage"}>Match</button>
       </div>
 
