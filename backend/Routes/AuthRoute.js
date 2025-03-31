@@ -59,14 +59,30 @@ router.post('/registered', async (req, res) => {
 router.post('/register', async (req, res) => {
 
 
-    const { name, age, auth0UserId } = req.body;
+    const { name, age, location, pronouns, genderIdentity,
+        datePreference,
+        relationshipType,
+        ethnicity,
+        religion,
+        bio,
+        education,
+        job,
+        auth0UserId } = req.body;
 
 
     try {
 
         const updatedUser = await User.findOneAndUpdate(
             { auth0UserId: auth0UserId },
-            { name: name, age: age},
+            { name: name, age: age, location: location, pronouns: pronouns,
+                genderIdentity: genderIdentity,
+                datePreference: datePreference,
+                relationshipType: relationshipType,
+                ethnicity: ethnicity,
+                religion: religion,
+                bio: bio,
+                education: education,
+                job: job},
             { new: true}
 
         );
