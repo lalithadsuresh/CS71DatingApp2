@@ -1,0 +1,97 @@
+body {
+    background-color: #fbf1e6;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+  }
+
+  
+  .container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .navigation {
+    background: black;
+    color: white;
+    padding: 10px;
+    font-family:'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+  }
+  
+  .nav-icon {
+    color: #f4f4f4;
+    margin-right: 10px;
+  }
+  
+  .title {
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 36px;
+    text-align: center;
+    font-weight: bold;
+    color: black;
+  }
+  
+  .subtitle {
+    font-size: 16px;
+    font-family: cursive;
+    text-align: center;
+    font-weight: 1000;
+    color: #555;
+  }
+  
+  .profile-card {
+    background: #F7D9E3;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .name {
+    font-weight: bold;
+    font-family: cursive;
+    text-decoration: underline;
+  }
+  
+  .question {
+    width: 90%;
+    margin-top: 10px;
+    padding: 8px;
+    border: 2px dotted purple;
+    border-radius: 5px;
+    background: white;
+  }
+  
+  .nav-links {
+    background: rgb(177, 148, 148);
+    color: white;
+    padding: 10px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+
+  }
+  
+  .link {
+    margin: 10px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .match-button {
+    background: white;
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+    border-radius: 5px;
+  }
+  
