@@ -4,6 +4,15 @@ body {
     text-align: center;
   }
 
+  .animated-text {
+    font-weight: bold;
+    font-size: 60px;
+    background: linear-gradient(90deg, #60d394, #75c7b3, #8cbfe2, #6d78dd);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 3s infinite linear;
+  }
   
   .container {
     max-width: 800px;
@@ -31,9 +40,19 @@ body {
     font-size: 36px;
     text-align: center;
     font-weight: bold;
-    color: black;
+    font-weight: bold;
+    font-size: 100px;
+    background: linear-gradient(180deg, #f1ce4f, #fbc1a2, #f24d48); /*fafafa*/
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 1s infinite horizontal;
   }
-  
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
   .subtitle {
     font-size: 16px;
     font-family: cursive;
@@ -43,7 +62,7 @@ body {
   }
   
   .profile-card {
-    background: #F7D9E3;
+    background: lavender;
     padding: 20px;
     border-radius: 15px;
     box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.1);
@@ -52,20 +71,19 @@ body {
   .name {
     font-weight: bold;
     font-family: cursive;
-    text-decoration: underline;
   }
   
   .question {
     width: 90%;
     margin-top: 10px;
     padding: 8px;
-    border: 2px dotted purple;
+    border: 1px solid rgb(148, 115, 148);
     border-radius: 5px;
     background: white;
   }
   
   .nav-links {
-    background: rgb(177, 148, 148);
+    background: #de9180;
     color: white;
     padding: 10px;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -84,7 +102,7 @@ body {
   
   .match-button {
     background: white;
-    color: black;
+    color: #de9180;
     padding: 10px 20px;
     border: none;
     cursor: pointer;
