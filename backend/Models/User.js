@@ -10,7 +10,19 @@ const UserSchema = new mongoose.Schema({
     
     //profile info
     name: {type: String},
-    age: {type: Number}
+    age: {type: Number},
+    location: {type: String},
+    pronouns: {type: String}, 
+    genderIdentity: {type: String},
+    datePreference: {type: String},
+    relationshipType: {type: String},
+    ethnicity: {type: String},
+    religion: {type: String},
+    bio: {type: String},  
+    education: {type: String},
+    job: {type: String},
+    auth0UserId: {type: String},
+    swipedOn: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 
 
 })

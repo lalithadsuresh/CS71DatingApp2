@@ -34,7 +34,7 @@ const AuthenticatePage = () => {
                     }
 
                 })
-                console.log('Sync success');
+                console.log('cess');
             })
             .catch((err) => {
                 console.error(err);

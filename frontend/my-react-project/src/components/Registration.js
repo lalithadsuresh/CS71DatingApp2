@@ -24,6 +24,7 @@ const Registration = () => {
         bio: '',
         education: '',
         job: ''
+        
     });
 
     const handleChange = (e) => {
@@ -51,6 +52,7 @@ const Registration = () => {
                 auth0UserId: auth0UserId
                 }
             );
+
 
             navigate("/matches")
 
