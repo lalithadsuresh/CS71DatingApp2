@@ -91,12 +91,12 @@ const Registration = () => {
 
 
 
-        <div className="container py-5">
+        <div className="container">
             <form onSubmit={handleSubmit}> 
 
-                <h2 className="mb-5">Personal Information</h2>
+                <h2 className="title">Personal Information</h2>
 
-                <div className="form-group mb-4">
+                <div className="text">
                     <label htmlFor="name">Name</label>
                     <input
                         type="text"
@@ -108,7 +108,7 @@ const Registration = () => {
                     </input>
                 </div>
 
-                <div className="form-group mb-4">
+                <div className="text">
                     <label htmlFor="age">Age</label>
                     <input
                         type="number"
@@ -120,7 +120,7 @@ const Registration = () => {
                     </input>
                 </div>
 
-                <div className="form-group mb-4">
+                <div className="text">
                     <label htmlFor="location">Location</label>
                     <input
                         type="text"
@@ -132,7 +132,7 @@ const Registration = () => {
                     </input>
                 </div>
 
-                <div className="form-group mb-4">
+                <div className="text">
                     <label htmlFor="pronouns">Pronouns</label>
                     <input
                         type="text"
@@ -144,7 +144,7 @@ const Registration = () => {
                     </input>
                 </div>
 
-                <div className="form-group mb-4">
+                <div className="text">
                     <label htmlFor="genderIdentity">Gender Identity</label>
                     <input
                         type="text"
@@ -156,7 +156,7 @@ const Registration = () => {
                     </input>
                 </div>
 
-                <div className="form-group mb-4">
+                <div className="text">
                     <label htmlFor="datePreference">Who do you want to date? (Gender)</label>
                     <input
                         type="text"
@@ -168,7 +168,7 @@ const Registration = () => {
                     </input>
                 </div>
 
-                <div className="form-group mb-4">
+                <div className="text">
                     <label htmlFor="relationshipType">Relationship Type</label>
                     <select
                         name="relationshipType"
@@ -185,7 +185,7 @@ const Registration = () => {
                     </select>
                 </div>
 
-                <div className="form-group mb-4">
+                <div className="text">
                     <label htmlFor="ethnicity">Ethnicity</label>
                     <input
                         type="text"
@@ -197,7 +197,7 @@ const Registration = () => {
                     </input>
                 </div>
 
-                <div className="form-group mb-4">
+                <div className="text">
                     <label htmlFor="religion">Religion</label>
                     <input
                         type="text"
@@ -209,7 +209,7 @@ const Registration = () => {
                     </input>
                 </div>
 
-                <div className="form-group mb-4">
+                <div className="text">
                     <label htmlFor="bio">Short Bio</label>
                     <textarea
                         name="bio"
@@ -221,7 +221,7 @@ const Registration = () => {
                     </textarea>
                 </div>
 
-                <div className="form-group mb-4">
+                <div className="text">
                     <label htmlFor="education">Education</label>
                     <input
                         type="text"
@@ -245,7 +245,7 @@ const Registration = () => {
                     </input>
                 </div>
 
-                <button type="submit" className="btn btn-primary mt-4"> 
+                <button type="submit" className="button"> 
                     Submit
                 </button>
 

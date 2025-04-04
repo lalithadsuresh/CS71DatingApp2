@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom';
-import LogoutButton from './LogoutButton';
+import LogoutButton from './LogoutButton.js';
 import { useAuth0 } from '@auth0/auth0-react';
+import "./Main.css";
 
 
 function Navbar() {
@@ -21,6 +22,7 @@ function Navbar() {
         <a href="Settings" className="link">Settings</a>
         <a href="Profile" className="link">Profile</a>
         <button className="match-button" onClick={() => window.location.href = "\homepage"}>Match</button>
+        <LogoutButton className="button" />
       </div>
 
         <div className = 'menu-icon' onClick = {handleClick} >

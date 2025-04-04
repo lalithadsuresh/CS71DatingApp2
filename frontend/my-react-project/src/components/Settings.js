@@ -3,8 +3,8 @@ import React from 'react';
 const Settings = () => {
   return (
     <div>
-      This is the Settings part of our web app. 
-    </div>
+      <h1 className="title">Settings</h1>
+      </div>
   );
 };
 
