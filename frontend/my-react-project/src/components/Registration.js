@@ -233,7 +233,7 @@ const Registration = () => {
                     </input>
                 </div>
 
-                <div className="form-group mb-5">
+                <div className="text">
                     <label htmlFor="job">Job</label>
                     <input
                         type="text"

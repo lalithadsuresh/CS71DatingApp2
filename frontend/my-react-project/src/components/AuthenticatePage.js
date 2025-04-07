@@ -45,7 +45,6 @@ const AuthenticatePage = () => {
 
     return (
         <hi> 
-            Auth0 Login 
             <div>
                 {!isAuthenticated ? <LoginButton/> : <LogoutButton/> }
             </div>

@@ -7,8 +7,8 @@ const Homepage = () => {
 
   const { user, isLoading } = useAuth0();
   const [users, setUsers] = useState([]);
-  // console.log("Is loading:", isLoading);
-  // console.log("Users:", users);
+  console.log("Is loading:", isLoading);
+  console.log("Users:", users);
   
   useEffect(() => {
 

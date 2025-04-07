@@ -54,6 +54,7 @@ body {
   .title {
     font-family:"Montserrat Alternates", sans-serif;
     font-size: 50px;
+    padding: 50px;
     text-align: left;
     font-weight: bold;
     background: linear-gradient(180deg, #f1ce4f, #fbc1a2, #f24d48); /*fafafa*/
@@ -126,6 +127,10 @@ body {
     margin-top: 10px;
     border-radius: 10px;
     border-color: #de9180;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%);
   }  
   
   .match-button {
