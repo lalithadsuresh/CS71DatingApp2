@@ -17,7 +17,7 @@ const Homepage = () => {
 
         try {
           const currentUserId = user.sub;
-          const res = await axios.get(`http://localhost:5000/api/profile/fetchusers/${currentUserId}`);
+          const res = await axios.get(`http://localhost:5001/api/profile/fetchusers/${currentUserId}`);
           setUsers(res.data || []);
           console.log(res.data);
           

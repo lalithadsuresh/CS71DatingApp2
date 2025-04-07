@@ -12,7 +12,7 @@ const DecidingPage = () => {
 
         const checkRegistration = async () => {
             try {
-                const response = await axios.post('http://localhost:5000/api/users/registered', {
+                const response = await axios.post('http://localhost:5001/api/users/registered', {
                     auth0UserId: user.sub
                 });
                 const isRegistered = response.data.isRegistered;

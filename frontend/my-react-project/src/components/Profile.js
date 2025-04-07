@@ -28,7 +28,7 @@ const Profile = () => {
     const fetchProfile = async () => {
       try {
         console.log("Fetching profile for:", user?.sub);
-        const response = await axios.get(`http://localhost:5000/api/users/profile/${user?.sub}`);
+        const response = await axios.get(`http://localhost:5001/api/users/profile/${user?.sub}`);
         console.log("Profile data loaded:", response.data);
 
         if (response.data) {
@@ -75,7 +75,7 @@ const Profile = () => {
     console.log("Form data:", formData);
   
     try {
-      const response = await axios.put('http://localhost:5000/api/users/update', {
+      const response = await axios.put('http://localhost:5001/api/users/update', {
         ...formData,
         auth0UserId: user.sub
       });

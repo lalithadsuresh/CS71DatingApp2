@@ -13,11 +13,11 @@ const AuthenticatePage = () => {
 
     useEffect(() => {
         if (isAuthenticated && user) {
-            axios.post('http://localhost:5000/api/users/sync', {
+            axios.post('http://localhost:5001/api/users/sync', {
                 auth0UserId: user.sub,
             })
             .then((res) => {
-                axios.post('http://localhost:5000/api/users/registered', {
+                axios.post('http://localhost:5001/api/users/registered', {
                     auth0UserId: user.sub
                 })
                 .then(() => {
