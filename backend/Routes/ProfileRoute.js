@@ -2,7 +2,7 @@ const express = require('express');
 const User = require('../Models/User');
 const router = express.Router();
 
-router.get('test', async(req, res) => {
+router.get('/test', async(req, res) => {
 
     res.send("Hi!");
 
@@ -22,7 +22,7 @@ router.get('/fetchusers/:currentUserId', async (req, res) => {
         _id: { $ne: currentUser._id } 
       });
 
-      console.log(usersToDisplay);
+      //console.log(usersToDisplay);
       res.status(200).json(usersToDisplay); 
   
     } catch (error) {
@@ -58,9 +58,45 @@ router.post('/register', async (req, res) => {
         console.error(err);
 
     }
-
-
 });
+
+router.get('/profile/:auth0UserId', async (req, res) => {
+  try {
+      const user = await User.findOne({ auth0UserId: req.params.auth0UserId });
+
+      if (!user) {
+          return res.status(404).json({ message: "User not found" });
+      }
+
+      res.json(user);
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Error fetching profile" });
+  }
+});
+
+router.put('/update', async (req, res) => {
+  const { auth0UserId, ...updates } = req.body;
+
+  try {
+      const updatedUser = await User.findOneAndUpdate(
+          { auth0UserId },
+          { $set: updates },
+          { new: true }
+      );
+
+      if (!updatedUser) {
+          return res.status(404).json({ message: "User not found" });
+      }
+
+      res.json(updatedUser);
+  } catch (err) {
+      console.error("Error updating profile", err);
+      res.status(500).json({ error: "Update failed" });
+  }
+});
+
+
 
 module.exports = router; 
 
