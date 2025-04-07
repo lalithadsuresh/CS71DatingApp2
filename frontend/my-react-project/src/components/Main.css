@@ -1,10 +1,10 @@
 body {
     background-color: #fbf1e6;
-    font-family: 'Arial', sans-serif;
+    font-family: "Montserrat Alternates", sans-serif;
     text-align: center;
   }
 
-  .animated-text {
+  .animated-text { /*not animating atm*/
     font-weight: bold;
     font-size: 60px;
     background: linear-gradient(90deg, #60d394, #75c7b3, #8cbfe2, #6d78dd);
@@ -24,7 +24,7 @@ body {
     background: black;
     color: white;
     padding: 10px;
-    font-family:'Arial', sans-serif;
+    font-family:"Montserrat Alternates", sans-serif;
     font-weight: bold;
     font-size: 18px;
     text-align: center;
@@ -34,12 +34,14 @@ body {
     color: #f4f4f4;
     margin-right: 10px;
   }
+  .text {
+    font-family:"Montserrat Alternates", sans-serif;
+    font-weight: 600;
+  }
   
-  .title {
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: 36px;
+  .titleMain {
+    font-family:"Montserrat Alternates", sans-serif;
     text-align: center;
-    font-weight: bold;
     font-weight: bold;
     font-size: 100px;
     background: linear-gradient(180deg, #f1ce4f, #fbc1a2, #f24d48); /*fafafa*/
@@ -48,6 +50,20 @@ body {
     -webkit-text-fill-color: transparent;
     animation: gradientShift 1s infinite horizontal;
   }
+
+  .title {
+    font-family:"Montserrat Alternates", sans-serif;
+    font-size: 50px;
+    padding: 50px;
+    text-align: left;
+    font-weight: bold;
+    background: linear-gradient(180deg, #f1ce4f, #fbc1a2, #f24d48); /*fafafa*/
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 1s infinite horizontal;
+  }
+
   @keyframes gradientShift {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -55,9 +71,9 @@ body {
   }
   .subtitle {
     font-size: 16px;
-    font-family: cursive;
+    font-family: "Montserrat Alternates", sans-serif;
     text-align: center;
-    font-weight: 1000;
+    font-weight: 600;
     color: #555;
   }
   
@@ -86,7 +102,7 @@ body {
     background: #de9180;
     color: white;
     padding: 10px;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: "Montserrat Alternates", sans-serif;
     font-weight: bold;
     font-size: 18px;
     text-align: center;
@@ -99,6 +115,23 @@ body {
     color: white;
     font-weight: bold;
   }
+
+  .button {
+    background: white;
+    color: #de9180;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+    border-radius: 10px;
+    border-color: #de9180;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%);
+  }  
   
   .match-button {
     background: white;
@@ -107,7 +140,7 @@ body {
     border: none;
     cursor: pointer;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: bold;
     margin-top: 10px;
     border-radius: 5px;

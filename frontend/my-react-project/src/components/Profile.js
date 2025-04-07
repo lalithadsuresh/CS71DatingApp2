@@ -95,6 +95,7 @@ const Profile = () => {
   }
 
   return (
+
     <div className="container py-5">
       <form onSubmit={handleSubmit}>
         <h2 className="mb-5">Edit Your Profile</h2>

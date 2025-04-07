@@ -3,8 +3,7 @@ import "./Main.css"
 const Matches = () => {
   return (
     <div>
-      This is the Matches of our web app, where users 
-      swipe to view their matches. 
+      <h1 className="title">Matches</h1>
     </div>
   );
 };
