@@ -82,7 +82,6 @@ const Profile = () => {
   
       console.log("Response from server:", response.data);
       alert("Changes saved!");
-      navigate("/matches");
     } catch (err) {
       console.error("Error saving profile", err.response?.data || err.message);
       alert("Failed to save changes.");
@@ -90,9 +89,6 @@ const Profile = () => {
   };
   
 
-  if (isLoading) {
-    return <div className="text-center mt-5">Loading your profile...</div>;
-  }
 
   return (
 
