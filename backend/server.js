@@ -9,7 +9,7 @@ const cors = require('cors');
 dotenv.config(); // load environment variables
 
 const app = express();
-const port = 5000;
+const port = 5001;
 
 // extract mongoDB database URI (string identifier) from
 // environment variables
