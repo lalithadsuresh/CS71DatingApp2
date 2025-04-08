@@ -90,7 +90,7 @@ const Registration = () => {
 
 
 
-
+    <div className="page">
         <div className="container">
             <form onSubmit={handleSubmit}> 
 
@@ -252,7 +252,7 @@ const Registration = () => {
             </form>
         </div>
 
-        
+    </div>
 
     
     );

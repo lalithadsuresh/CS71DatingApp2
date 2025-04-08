@@ -21,6 +21,7 @@ function Navbar() {
         <a href="Settings" className="link">Settings</a>
         <a href="Profile" className="link">Profile</a>
         <button className="match-button" onClick={() => window.location.href = "\homepage"}>Match</button>
+        <button></button>
       </div>
 
         <div className = 'menu-icon' onClick = {handleClick} >

@@ -36,27 +36,27 @@ const Homepage = () => {
   // display them as cards here 
 
   return (
-    <>
-    <div className="container">
-        <h1 className="titleMain">Unmasked</h1>
-        <p className="subtitle">No pictures, just personality - unmask your true connection.</p>
+    <div className = "page">
+      <div className="container">
+          <h1 className="titleMain">Unmasked</h1>
+          <p className="subtitle">No pictures, just personality - unmask your true connection.</p>
+      </div>
+      
+      <div className="card-wrapper">
+        {isLoading ? (
+          <p className = "text">Loading users...</p>
+        ) : users.length === 0 ? (
+          <p className="text">No users to display.</p>
+        ) : (
+          users.map((u) => (
+            <div key={u.auth0UserId} className="profile-card">
+              <h2>{u.name}</h2>
+              <p>{u.bio}</p>
+            </div>
+          ))
+        )}
+      </div>
     </div>
-    
-    <div className="user-card-container">
-      {isLoading ? (
-        <p className = "text">Loading users...</p>
-      ) : users.length === 0 ? (
-        <p className="text">No users to display.</p>
-      ) : (
-        users.map((u) => (
-          <div key={u.auth0UserId} className="profile-card">
-            <h3>{u.name}</h3>
-            <p>{u.bio}</p>
-          </div>
-        ))
-      )}
-    </div>
-    </>
 
   );
 };

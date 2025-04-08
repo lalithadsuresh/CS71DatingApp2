@@ -92,70 +92,72 @@ const Profile = () => {
 
   return (
 
-    <div className="container py-5">
-      <form onSubmit={handleSubmit}>
-        <h2 className="mb-5">Edit Your Profile</h2>
+    <div className = "page">
+      <div className="container">
+        <form onSubmit={handleSubmit}>
+          <h2 className="title">Edit Info</h2>
 
-        {[
-          { label: "Name", name: "name", type: "text" },
-          { label: "Age", name: "age", type: "number" },
-          { label: "Location", name: "location", type: "text" },
-          { label: "Pronouns", name: "pronouns", type: "text" },
-          { label: "Gender Identity", name: "genderIdentity", type: "text" },
-          { label: "Who do you want to date? (Gender)", name: "datePreference", type: "text" },
-          { label: "Ethnicity", name: "ethnicity", type: "text" },
-          { label: "Religion", name: "religion", type: "text" },
-          { label: "Education", name: "education", type: "text" },
-          { label: "Job", name: "job", type: "text" }
-        ].map((field, idx) => (
-          <div className="form-group mb-4" key={idx}>
-            <label htmlFor={field.name}>{field.label}</label>
-            <input
-              type={field.type}
-              name={field.name}
-              value={formData[field.name]}
+          {[
+            { label: "Name", name: "name", type: "text" },
+            { label: "Age", name: "age", type: "number" },
+            { label: "Location", name: "location", type: "text" },
+            { label: "Pronouns", name: "pronouns", type: "text" },
+            { label: "Gender Identity", name: "genderIdentity", type: "text" },
+            { label: "Who do you want to date? (Gender)", name: "datePreference", type: "text" },
+            { label: "Ethnicity", name: "ethnicity", type: "text" },
+            { label: "Religion", name: "religion", type: "text" },
+            { label: "Education", name: "education", type: "text" },
+            { label: "Job", name: "job", type: "text" }
+          ].map((field, idx) => (
+            <div className="text" key={idx}>
+              <label htmlFor={field.name}>{field.label}</label>
+              <input
+                type={field.type}
+                name={field.name}
+                value={formData[field.name]}
+                className="form-control"
+                id={field.name}
+                onChange={handleChange}
+              />
+            </div>
+          ))}
+
+          <div className="text">
+            <label htmlFor="relationshipType">Relationship Type</label>
+            <select
+              name="relationshipType"
+              value={formData.relationshipType}
               className="form-control"
-              id={field.name}
+              id="relationshipType"
+              onChange={handleChange}
+            >
+              <option value="">Select an option</option>
+              <option>Life Partner</option>
+              <option>Long-term Relationship</option>
+              <option>Short-term Relationship</option>
+              <option>Unsure</option>
+              <option>Prefer not to say</option>
+            </select>
+          </div>
+
+          <div className="text">
+            <label htmlFor="bio">Short Bio</label>
+            <textarea
+              name="bio"
+              value={formData.bio}
+              className="form-control"
+              id="bio"
+              rows="4"
               onChange={handleChange}
             />
           </div>
-        ))}
 
-        <div className="form-group mb-4">
-          <label htmlFor="relationshipType">Relationship Type</label>
-          <select
-            name="relationshipType"
-            value={formData.relationshipType}
-            className="form-control"
-            id="relationshipType"
-            onChange={handleChange}
-          >
-            <option value="">Select an option</option>
-            <option>Life Partner</option>
-            <option>Long-term Relationship</option>
-            <option>Short-term Relationship</option>
-            <option>Unsure</option>
-            <option>Prefer not to say</option>
-          </select>
-        </div>
-
-        <div className="form-group mb-4">
-          <label htmlFor="bio">Short Bio</label>
-          <textarea
-            name="bio"
-            value={formData.bio}
-            className="form-control"
-            id="bio"
-            rows="4"
-            onChange={handleChange}
-          />
-        </div>
-
-        <button type="submit" className="btn btn-primary mt-4">
-          Save Changes
-        </button>
-      </form>
-    </div>
+          <button type="submit" className="button">
+            Save Changes
+          </button>
+        </form>
+      </div>
+    /</div>
   );
 };
 
