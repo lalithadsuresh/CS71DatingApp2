@@ -51,7 +51,9 @@ const Homepage = () => {
           users.map((u) => (
             <div key={u.auth0UserId} className="profile-card">
               <h2>{u.name}</h2>
-              <p>{u.bio}</p>
+              <p className = "text" >{u.age}</p>
+              <p className = "text" >{u.location}</p>
+              <p  className = "bio" >{u.bio}</p>
             </div>
           ))
         )}
