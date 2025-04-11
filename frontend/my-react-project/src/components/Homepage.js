@@ -56,6 +56,8 @@ const Homepage = () => {
 
         console.log("MATCHED USERS");
       }
+
+      // To prevent the appearance of an accepted user
   
       setUsers((prevUsers) =>
         prevUsers.filter((u) => u.auth0UserId !== acceptedUser.auth0UserId)
@@ -72,6 +74,7 @@ const Homepage = () => {
         targetUserId: declinedUser.auth0UserId,
       });
   
+      // To prevent the appearance of a declined user
       setUsers((prevUsers) =>
         prevUsers.filter((u) => u.auth0UserId !== declinedUser.auth0UserId)
       );

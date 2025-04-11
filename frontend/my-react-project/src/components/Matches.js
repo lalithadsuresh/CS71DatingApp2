@@ -7,6 +7,22 @@ const Matches = () => {
   const { user, isLoading } = useAuth0();
   const [matches, setMatches] = useState([]);
 
+  const handleUnmatch = async (unmatchedUserId) => {
+    try {
+      await axios.post("http://localhost:5001/api/profile/unmatch", {
+        userId: user.sub, // current user
+        targetUserId: unmatchedUserId, // the person to unmatch
+      });
+  
+      // Remove from local matches state
+      setMatches((prev) =>
+        prev.filter((match) => match.auth0UserId !== unmatchedUserId)
+      );
+    } catch (err) {
+      console.error("Error unmatching:", err);
+    }
+  };
+
   useEffect(() => {
     const fetchMatches = async () => {
       if (!user || isLoading) return;
@@ -36,6 +52,10 @@ const Matches = () => {
                 <p className="text">Age: {match.age}</p>
                 <p className="text">Location: {match.location}</p>
                 <p className="bio">{match.bio}</p>
+
+                <div className="button">
+                  <button onClick={() => handleUnmatch(match.auth0UserId)}>Unmatch</button>
+                </div>
               </div>
             ))}
           </div>

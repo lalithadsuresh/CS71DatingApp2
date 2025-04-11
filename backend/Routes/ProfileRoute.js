@@ -194,6 +194,32 @@ router.get('/getmatches/:userId', async (req, res) => {
 });
 
 
+router.post("/unmatch", async (req, res) => {
+  const { userId, targetUserId } = req.body;
+
+  try {
+    const user = await User.findOne({ auth0UserId: userId });
+    const target = await User.findOne({ auth0UserId: targetUserId });
+
+  
+    // filter operation, basically a for loop to keep everything except user 
+    // with id == targetUserID 
+    
+    user.matches = user.matches.filter((id) => id !== targetUserId);
+    target.matches = target.matches.filter((id) => id !== userId);
+
+    await user.save();
+    await target.save();
+
+    res.status(200).json({ message: "Unmatched successfully" });
+  } catch (error) {
+    console.error("unmatching error:", error);
+    res.status(500).json({ error: "Server error during unmatch" });
+  }
+});
+
+
+
 
 
 
