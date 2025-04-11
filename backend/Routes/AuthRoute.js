@@ -28,7 +28,7 @@ router.post('/sync', async (req, res) => {
         }
 
 
-        console.log(auth0UserId);
+        //console.log(auth0UserId);
         res.status(200).send('Received');
 
     }
@@ -135,10 +135,13 @@ router.get('/profile/:auth0UserId', async (req, res) => {
     }
   });
 
-router.put('/update', async (req, res) => {
-    console.log("Received update payload:", req.body); // for debugging
+  router.put('/update', upload.single('profileImage'), async (req, res) => {
+    //console.log("Received update payload:", req.body);
   
     const { auth0UserId, ...updates } = req.body;
+    if (req.file) {
+      updates.profileImage = req.file.path;
+    }
   
     try {
       const updatedUser = await User.findOneAndUpdate(
@@ -157,6 +160,7 @@ router.put('/update', async (req, res) => {
       res.status(500).json({ error: "Update failed" });
     }
   });
+  
   
 
 module.exports = router; 
