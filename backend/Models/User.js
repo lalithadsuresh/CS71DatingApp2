@@ -22,7 +22,11 @@ const UserSchema = new mongoose.Schema({
     education: {type: String},
     job: {type: String},
     auth0UserId: {type: String},
-    swipedOn: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+    swipedOn: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    acceptedUsers: [String], 
+    declinedUsers: [String],
+    matches: [String]
+
 
 
 })

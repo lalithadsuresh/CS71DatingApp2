@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const mongoose = require('mongoose');
 const userRoutes = require('./Routes/AuthRoute');
 const profileRoutes = require('./Routes/ProfileRoute');
+const matchRoutes = require('./Routes/MatchRoute');
 const cors = require('cors');
 
 
@@ -47,6 +48,7 @@ app.get('/', function (req, res) {
 
 app.use('/api/users', userRoutes);
 app.use('/api/profile', profileRoutes);
+//app.use('/api/match', matchRoutes);
 
 
 // route "/hello" testing for fun 
