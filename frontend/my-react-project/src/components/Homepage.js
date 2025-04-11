@@ -7,6 +7,7 @@ const Homepage = () => {
 
   const { user, isLoading } = useAuth0();
   const [users, setUsers] = useState([]);
+  const [matches, setMatches] = useState([]);
   console.log("Is loading:", isLoading);
   console.log("Users:", users);
   
@@ -37,8 +38,25 @@ const Homepage = () => {
         userId: user.sub,
         targetUserId: acceptedUser.auth0UserId,
       });
+
+      const matchRes = await axios.post("http://localhost:5001/api/profile/checkMatch", {
+        userId: user.sub,
+        targetUserId: acceptedUser.auth0UserId,
+      });
+      
+      if (matchRes.data.match) {
+
+        // for the original user and current user, place the cards in the matches
+        // section with their respective social media handles
+
+        // prevMatches = prevMatches += acceptedUser
+
+        setMatches((prevMatches) => [...prevMatches, acceptedUser]);
+        
+
+        console.log("MATCHED USERS");
+      }
   
-      // Remove from UI regardless of backend result
       setUsers((prevUsers) =>
         prevUsers.filter((u) => u.auth0UserId !== acceptedUser.auth0UserId)
       );
@@ -61,6 +79,7 @@ const Homepage = () => {
       console.error("Error declining user:", error);
     }
   };
+
   
 
   // get all users in database that the current user hasn't swiped on
