@@ -25,8 +25,8 @@ const UserSchema = new mongoose.Schema({
     swipedOn: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     acceptedUsers: [String], 
     declinedUsers: [String],
-    matches: [String]
-
+    matches: [String],
+    profileImage: { type: String }
 
 
 })

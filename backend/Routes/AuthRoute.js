@@ -1,6 +1,20 @@
 const express = require('express');
 const User = require('../Models/User');
 const router = express.Router();
+const multer = require('multer');
+const path = require('path');
+
+// Multer for image upload
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // make sure 'uploads' folder exists
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  }
+});
+const upload = multer({ storage });
+
 
 router.post('/sync', async (req, res) => {
 
@@ -56,7 +70,7 @@ router.post('/registered', async (req, res) => {
 
 });
 
-router.post('/register', async (req, res) => {
+router.post('/register', upload.single('profileImage'), async (req, res) => {
 
 
     const { name, age, location, pronouns, genderIdentity,
@@ -68,6 +82,8 @@ router.post('/register', async (req, res) => {
         education,
         job,
         auth0UserId } = req.body;
+
+    const profileImage = req.file ? req.file.path : null;
 
 
     try {
@@ -82,7 +98,8 @@ router.post('/register', async (req, res) => {
                 religion: religion,
                 bio: bio,
                 education: education,
-                job: job},
+                job: job,
+                profileImage: profileImage},
             { new: true}
 
         );
