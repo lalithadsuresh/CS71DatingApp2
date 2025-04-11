@@ -30,6 +30,37 @@ const Homepage = () => {
     fetchUsersDisplayed();
 
   }, [user, isLoading]);
+
+  const handleAccept = async (acceptedUser) => {
+    try {
+      await axios.post("http://localhost:5001/api/profile/accept", {
+        userId: user.sub,
+        targetUserId: acceptedUser.auth0UserId,
+      });
+  
+      // Remove from UI regardless of backend result
+      setUsers((prevUsers) =>
+        prevUsers.filter((u) => u.auth0UserId !== acceptedUser.auth0UserId)
+      );
+    } catch (error) {
+      console.error("Error accepting user:", error);
+    }
+  };
+  
+  const handleDecline = async (declinedUser) => {
+    try {
+      await axios.post("http://localhost:5001/api/profile/decline", {
+        userId: user.sub,
+        targetUserId: declinedUser.auth0UserId,
+      });
+  
+      setUsers((prevUsers) =>
+        prevUsers.filter((u) => u.auth0UserId !== declinedUser.auth0UserId)
+      );
+    } catch (error) {
+      console.error("Error declining user:", error);
+    }
+  };
   
 
   // get all users in database that the current user hasn't swiped on
@@ -54,6 +85,12 @@ const Homepage = () => {
               <p className = "text" >{u.age}</p>
               <p className = "text" >{u.location}</p>
               <p  className = "bio" >{u.bio}</p>
+
+              <div className="card-buttons">
+                <button onClick={() => handleAccept(u)}>Accept</button>
+                <button onClick={() => handleDecline(u)}>Decline</button>
+              </div>
+
             </div>
           ))
         )}
