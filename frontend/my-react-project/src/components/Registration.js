@@ -27,6 +27,8 @@ const Registration = () => {
         
     });
 
+    const [profileImage, setProfileImage] = useState(null);
+
     const handleChange = (e) => {
         const {name, value} = e.target;
         setFormData((prevFormData) => {
@@ -37,6 +39,12 @@ const Registration = () => {
 
     }
 
+    const handleImageChange = (e) => {
+        setProfileImage(e.target.files[0]);
+    };
+    
+   
+
     const handleSubmit = async (e) => {
 
         e.preventDefault();
@@ -45,15 +53,32 @@ const Registration = () => {
 
         //send a request to put it into database?
 
+        const submission = new FormData();
+        for (const key in formData) {
+          submission.append(key, formData[key]);
+        }
+    
+        if (profileImage) {
+          submission.append('profileImage', profileImage);
+        }
+    
+        submission.append('auth0UserId', user.sub);
+    
+        
         try {
             
-            const response = await axios.post('http://localhost:5001/api/users/register',
-                {...formData,
-                auth0UserId: auth0UserId
+            const response = await axios.post(
+                'http://localhost:5001/api/users/register',
+                submission,
+                {
+                  headers: {
+                    'Content-Type': 'multipart/form-data',
+                  },
                 }
-            );
+              );
+              
 
-
+              
             navigate("/matches")
 
             console.log("Success");
@@ -67,32 +92,12 @@ const Registration = () => {
     }
 
     return (
-/*         <form onSubmit={handleSubmit}> 
-            <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Name">
-            </input>
-            <input
-                type="number"
-                name="age"
-                value={formData.age}
-                onChange={handleChange}
-                placeholder="Age">
-            </input>
-            <button type="submit"> 
-                Register
-            </button>
-        </form>
-*/
 
 
 
     <div className="page">
         <div className="container">
-            <form onSubmit={handleSubmit}> 
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
 
                 <h2 className="title">Personal Information</h2>
 
@@ -244,6 +249,17 @@ const Registration = () => {
                         onChange={handleChange}>
                     </input>
                 </div>
+
+                <div className="form-group mb-4">
+                    <label htmlFor="profileImage">Profile Image</label>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        className="form-control"
+                        onChange={handleImageChange}
+                    />
+                </div>
+
 
                 <button type="submit" className="button"> 
                     Submit

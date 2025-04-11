@@ -39,6 +39,8 @@ startServer();
 
 app.use(cors());
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
+
 
 app.get('/', function (req, res) {
   res.send('Hello World!');
