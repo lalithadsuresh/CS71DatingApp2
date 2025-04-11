@@ -98,6 +98,7 @@ router.put('/update', async (req, res) => {
   }
 });
 
+// Push users to accepted array in MongoDB database
 
 router.post('/accept', async (req, res) => {
   const { userId, targetUserId } = req.body;
@@ -114,6 +115,8 @@ router.post('/accept', async (req, res) => {
   }
 });
 
+
+// Push users to declined array in MongoDB database
 router.post('/decline', async (req, res) => {
   const { userId, targetUserId } = req.body;
 
@@ -128,6 +131,72 @@ router.post('/decline', async (req, res) => {
     res.status(500).json({ error: 'Error declining user' });
   }
 });
+
+// helper method to store match in database for checkMatch endpoint 
+
+const storeMatch = async (userAId, userBId) => {
+  const userA = await User.findOne({ auth0UserId: userAId });
+  const userB = await User.findOne({ auth0UserId: userBId });
+
+  if (!userA || !userB) return;
+
+  // If UserA's matches don't already have UserB, then add userB and save
+  if (!userA.matches.includes(userBId)) {
+    userA.matches.push(userBId);
+    await userA.save();
+  }
+
+  // Same functionality as before just switched around
+  if (!userB.matches.includes(userAId)) {
+    userB.matches.push(userAId);
+    await userB.save();
+  }
+};
+
+router.post('/checkMatch', async (req, res) => {
+  const { userId, targetUserId } = req.body;
+
+  try {
+    const targetUser = await User.findOne({ auth0UserId: targetUserId });
+
+    if (!targetUser) return res.status(404).json({ message: "Target user not found" });
+
+    const isMatch = targetUser.acceptedUsers.includes(userId);
+
+    if (isMatch) {
+      await storeMatch(userId, targetUserId);
+      return res.status(200).json({ match: true });
+    }
+
+    return res.status(200).json({ match: false });
+
+  } catch (error) {
+    console.error("Error", error);
+  }
+});
+
+
+router.get('/getmatches/:userId', async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const currentUser = await User.findOne({ auth0UserId: userId });
+
+    const matchedUsers = await User.find({
+      auth0UserId: { $in: currentUser.matches }
+    });
+
+    res.json(matchedUsers);
+  } catch (error) {
+    console.error("Error match:", error);
+    res.status(500).json({ error: "Failed to fetch matches" });
+  }
+});
+
+
+
+
+
 
 
 

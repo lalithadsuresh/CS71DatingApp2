@@ -25,7 +25,7 @@ function Navbar() {
             <Link to="/profile" className="link">Profile</Link>
             <button 
               className="match-button" 
-              onClick={() => window.location.href = "/homepage"}>Matches 
+              onClick={() => window.location.href = "/homepage"}>Swipe 
             </button>
 
           </div>
