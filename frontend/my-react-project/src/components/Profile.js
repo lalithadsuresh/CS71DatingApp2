@@ -21,7 +21,7 @@ const Profile = () => {
     education: '',
     job: ''
   });
-
+  const [profileImage, setProfileImage] = useState(null);
   const [isLoading, setIsLoading] = useState(true); 
 
   useEffect(() => {
@@ -69,16 +69,35 @@ const Profile = () => {
     }));
   };
 
+const handleImageChange = (e) => {
+  setProfileImage(e.target.files[0]);
+};
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Submitting form...");
     console.log("Form data:", formData);
   
+    const submission = new FormData();
+    for (const key in formData) {
+      submission.append(key, formData[key]);
+    }
+    if (profileImage) {
+      submission.append("profileImage", profileImage);
+    }
+    submission.append("auth0UserId", user.sub);
+  
     try {
-      const response = await axios.put('http://localhost:5001/api/users/update', {
-        ...formData,
-        auth0UserId: user.sub
-      });
+      const response = await axios.put(
+        "http://localhost:5001/api/users/update",
+        submission,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
   
       console.log("Response from server:", response.data);
       alert("Changes saved!");
@@ -89,12 +108,11 @@ const Profile = () => {
   };
   
 
-
   return (
 
     <div className = "page">
       <div className="container">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
           <h2 className="title">Edit Info</h2>
 
           {[
@@ -149,6 +167,16 @@ const Profile = () => {
               id="bio"
               rows="4"
               onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group mb-4">
+            <label htmlFor="profileImage">Update Profile Image</label>
+            <input
+              type="file"
+              accept="image/*"
+              className="form-control"
+              onChange={handleImageChange}
             />
           </div>
 
