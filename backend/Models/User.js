@@ -26,8 +26,24 @@ const UserSchema = new mongoose.Schema({
     acceptedUsers: [String], 
     declinedUsers: [String],
     matches: [String],
-    profileImage: { type: String }
-
+    profileImage: { type: String },
+    hobbies: { type: String },
+    dealbreakers: { type: String },
+    bestJoke: { type: String },
+    dinnerGuest: { type: String },
+    perfectDay: { type: String },
+    finalMeal: { type: String },
+    mostGrateful: { type: String },
+    accomplishment: { type: String },
+    valueFriendship: { type: String },
+    treasuredMemory: { type: String },
+    terribleMemory: { type: String },
+    loveLanguage: { type: String },
+    lastCried: { type: String },
+    seriousJoke: { type: String },
+    travelDestination: { type: String },
+    nextCity: { type: String }
+      
 
 })
 

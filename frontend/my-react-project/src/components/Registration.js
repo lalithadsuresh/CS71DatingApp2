@@ -23,7 +23,23 @@ const Registration = () => {
         religion: '',
         bio: '',
         education: '',
-        job: ''
+        job: '',
+        hobbies: '',
+        dealbreakers: '',
+        bestJoke: '',
+        dinnerGuest: '',
+        perfectDay: '',
+        finalMeal: '',
+        mostGrateful: '',
+        accomplishment: '',
+        valueFriendship: '',
+        treasuredMemory: '',
+        terribleMemory: '',
+        loveLanguage: '',
+        lastCried: '',
+        seriousJoke: '',
+        travelDestination: '',
+        nextCity: ''
         
     });
 
@@ -260,6 +276,39 @@ const Registration = () => {
                     />
                 </div>
 
+
+                <h4 className=" mt-5">About you (Answer 5 questions)</h4>
+
+                    {[
+                    { label: "What are your hobbies?", name: "hobbies" },
+                    { label: "What are your dealbreakers?", name: "dealbreakers" },
+                    { label: "What is your best joke?", name: "bestJoke" },
+                    { label: "Given the choice of anyone in the world, who would you want as a dinner guest?", name: "dinnerGuest" },
+                    { label: "What would be a “perfect” day for you?", name: "perfectDay" },
+                    { label: "What would your final meal be?", name: "finalMeal" },
+                    { label: "What are you most grateful for in your life?", name: "mostGrateful" },
+                    { label: "What’s your greatest accomplishment?", name: "accomplishment" },
+                    { label: "What do you value most in a friendship?", name: "valueFriendship" },
+                    { label: "What’s your most treasured memory?", name: "treasuredMemory" },
+                    { label: "What’s your most terrible memory?", name: "terribleMemory" },
+                    { label: "What is your love language?", name: "loveLanguage" },
+                    { label: "Think about the last time you cried, what was the reason?", name: "lastCried" },
+                    { label: "What, if anything, is too serious to be joked about?", name: "seriousJoke" },
+                    { label: "Favorite travel destination?", name: "travelDestination" },
+                    { label: "Which country/city do you want to visit next?", name: "nextCity" },
+                    ].map((q, idx) => (
+                    <div className="text" key={idx}>
+                        <label htmlFor={q.name}>{q.label}</label>
+                        <textarea
+                        name={q.name}
+                        value={formData[q.name]}
+                        className="form-control"
+                        id={q.name}
+                        rows="2"
+                        onChange={handleChange}
+                        />
+                    </div>
+                ))}
 
                 <button type="submit" className="button"> 
                     Submit
