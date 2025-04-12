@@ -81,7 +81,24 @@ router.post('/register', upload.single('profileImage'), async (req, res) => {
         bio,
         education,
         job,
-        auth0UserId } = req.body;
+        auth0UserId, 
+        hobbies,
+        dealbreakers,
+        bestJoke,
+        dinnerGuest,
+        perfectDay,
+        finalMeal,
+        mostGrateful,
+        accomplishment,
+        valueFriendship,
+        treasuredMemory,
+        terribleMemory,
+        loveLanguage,
+        lastCried,
+        seriousJoke,
+        travelDestination,
+        nextCity
+      } = req.body;
 
     const profileImage = req.file ? req.file.path : null;
 
@@ -99,7 +116,25 @@ router.post('/register', upload.single('profileImage'), async (req, res) => {
                 bio: bio,
                 education: education,
                 job: job,
-                profileImage: profileImage},
+                profileImage: profileImage, 
+                hobbies: hobbies, 
+                dealbreakers:dealbreakers, 
+                bestJoke:bestJoke, 
+                dinnerGuest: dinnerGuest, 
+                perfectDay:perfectDay,
+                finalMeal:finalMeal, 
+                mostGrateful: mostGrateful, 
+                accomplishment: accomplishment, 
+                valueFriendship:valueFriendship,
+                treasuredMemory: treasuredMemory, 
+                terribleMemory:terribleMemory, 
+                loveLanguage:loveLanguage, 
+                lastCried:lastCried,
+                seriousJoke:seriousJoke, 
+                travelDestination:travelDestination, 
+                nextCity:nextCity
+              
+              },
             { new: true}
 
         );
