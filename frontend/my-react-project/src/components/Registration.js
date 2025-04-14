@@ -18,6 +18,7 @@ const Registration = () => {
         pronouns: '',
         genderIdentity: '',
         datePreference: '',
+        profileImage: '',
         relationshipType: '',
         ethnicity: '',
         religion: '',
@@ -265,6 +266,8 @@ const Registration = () => {
                         onChange={handleChange}>
                     </input>
                 </div>
+
+
 
                 <div className="form-group mb-4">
                     <label htmlFor="profileImage">Profile Image</label>
