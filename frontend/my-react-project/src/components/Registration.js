@@ -25,36 +25,26 @@ const Registration = () => {
         bio: '',
         education: '',
         job: '',
-        hobbies: '',
-        dealbreakers: '',
-        bestJoke: '',
-        dinnerGuest: '',
-        perfectDay: '',
-        finalMeal: '',
-        mostGrateful: '',
-        accomplishment: '',
-        valueFriendship: '',
-        treasuredMemory: '',
-        terribleMemory: '',
-        loveLanguage: '',
-        lastCried: '',
-        seriousJoke: '',
-        travelDestination: '',
-        nextCity: ''
+ 
         
     });
 
     const [profileImage, setProfileImage] = useState(null);
-
+    const [aboutAnswers, setAboutAnswers] = useState({});
+    const [selectedQuestions, setSelectedQuestions] = useState([]);
+  
     const handleChange = (e) => {
-        const {name, value} = e.target;
-        setFormData((prevFormData) => {
-            let updatedForm = {...prevFormData};
-            updatedForm[name] = value;
-            return updatedForm;
-        });
-
-    }
+        const { name, value } = e.target;
+        if (selectedQuestions.includes(name)) {
+          setAboutAnswers((prev) => ({ ...prev, [name]: value }));
+        } else {
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: value
+          }));
+        }
+    };
+      
 
     const handleImageChange = (e) => {
         setProfileImage(e.target.files[0]);
@@ -63,50 +53,61 @@ const Registration = () => {
    
 
     const handleSubmit = async (e) => {
-
         e.preventDefault();
-
+      
         const auth0UserId = user?.sub;
-
-        //send a request to put it into database?
-
+      
         const submission = new FormData();
-        for (const key in formData) {
-          submission.append(key, formData[key]);
-        }
-    
+      
+        const standardFields = [
+          "name",
+          "age",
+          "location",
+          "pronouns",
+          "genderIdentity",
+          "datePreference",
+          "relationshipType",
+          "ethnicity",
+          "religion",
+          "bio",
+          "education",
+          "job"
+        ];
+      
+        standardFields.forEach((field) => {
+          submission.append(field, formData[field]);
+        });
+      
+        // only include the 5 selected "About You" questions
+        selectedQuestions.forEach((field) => {
+            submission.append(field, aboutAnswers[field] || '');
+          });
+          
+        // image
         if (profileImage) {
-          submission.append('profileImage', profileImage);
+          submission.append("profileImage", profileImage);
         }
-    
-        submission.append('auth0UserId', user.sub);
-    
-        
+      
+        submission.append("auth0UserId", auth0UserId);
+      
         try {
-            
-            const response = await axios.post(
-                'http://localhost:5001/api/users/register',
-                submission,
-                {
-                  headers: {
-                    'Content-Type': 'multipart/form-data',
-                  },
-                }
-              );
-              
-
-              
-            navigate("/matches")
-
-            console.log("Success");
-
+          const response = await axios.post(
+            "http://localhost:5001/api/users/register",
+            submission,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data"
+              }
+            }
+          );
+      
+          console.log("Success");
+          navigate("/matches");
         } catch (err) {
-
-            console.log("Error");
-
+          console.log("Error", err);
         }
-
-    }
+      };
+      
 
     return (
 
@@ -280,7 +281,7 @@ const Registration = () => {
                 </div>
 
 
-                <h4 className=" mt-5">About you (Answer 5 questions)</h4>
+                <h4 className="mt-5">About you (Answer 5 questions)</h4>
 
                     {[
                     { label: "What are your hobbies?", name: "hobbies" },
@@ -298,20 +299,44 @@ const Registration = () => {
                     { label: "Think about the last time you cried, what was the reason?", name: "lastCried" },
                     { label: "What, if anything, is too serious to be joked about?", name: "seriousJoke" },
                     { label: "Favorite travel destination?", name: "travelDestination" },
-                    { label: "Which country/city do you want to visit next?", name: "nextCity" },
+                    { label: "Which country/city do you want to visit next?", name: "nextCity" }
                     ].map((q, idx) => (
                     <div className="text" key={idx}>
-                        <label htmlFor={q.name}>{q.label}</label>
-                        <textarea
-                        name={q.name}
-                        value={formData[q.name]}
-                        className="form-control"
-                        id={q.name}
-                        rows="2"
-                        onChange={handleChange}
+                        <div className="form-check mb-2">
+                        <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id={`checkbox-${q.name}`}
+                            checked={selectedQuestions.includes(q.name)}
+                            disabled={
+                            !selectedQuestions.includes(q.name) &&
+                            selectedQuestions.length >= 5
+                            }
+                            onChange={() => {
+                            setSelectedQuestions(prev =>
+                                prev.includes(q.name)
+                                ? prev.filter(qn => qn !== q.name)
+                                : [...prev, q.name]
+                            );
+                            }}
                         />
+                        <label className="form-check-label" htmlFor={`checkbox-${q.name}`}>
+                            {q.label}
+                        </label>
+                        </div>
+                        {selectedQuestions.includes(q.name) && (
+                        <textarea
+                            name={q.name}
+                            value={aboutAnswers[q.name] || ''}
+                            className="form-control mb-3"
+                            id={q.name}
+                            rows="2"
+                            onChange={handleChange}
+                        />
+                        )}
                     </div>
                 ))}
+
 
                 <button type="submit" className="button"> 
                     Submit

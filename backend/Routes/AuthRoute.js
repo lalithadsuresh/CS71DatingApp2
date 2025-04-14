@@ -81,66 +81,27 @@ router.post('/register', upload.single('profileImage'), async (req, res) => {
         education,
         job,
         auth0UserId, 
-        hobbies,
-        dealbreakers,
-        bestJoke,
-        dinnerGuest,
-        perfectDay,
-        finalMeal,
-        mostGrateful,
-        accomplishment,
-        valueFriendship,
-        treasuredMemory,
-        terribleMemory,
-        loveLanguage,
-        lastCried,
-        seriousJoke,
-        travelDestination,
-        nextCity
+        ...aboutYouFields
       } = req.body;
 
     const profileImage = req.file ? req.file.path : null;
 
 
     try {
-
-        const updatedUser = await User.findOneAndUpdate(
-            { auth0UserId: auth0UserId },
-            { name: name, age: age, location: location, pronouns: pronouns,
-                genderIdentity: genderIdentity,
-                datePreference: datePreference,
-                relationshipType: relationshipType,
-                ethnicity: ethnicity,
-                religion: religion,
-                bio: bio,
-                education: education,
-                job: job,
-                profileImage: profileImage, 
-                hobbies: hobbies, 
-                dealbreakers:dealbreakers, 
-                bestJoke:bestJoke, 
-                dinnerGuest: dinnerGuest, 
-                perfectDay:perfectDay,
-                finalMeal:finalMeal, 
-                mostGrateful: mostGrateful, 
-                accomplishment: accomplishment, 
-                valueFriendship:valueFriendship,
-                treasuredMemory: treasuredMemory, 
-                terribleMemory:terribleMemory, 
-                loveLanguage:loveLanguage, 
-                lastCried:lastCried,
-                seriousJoke:seriousJoke, 
-                travelDestination:travelDestination, 
-                nextCity:nextCity
-              
-              },
-            { new: true}
-
-        );
-
-        if (!updatedUser) {
-            return res.status(404).json({ message: "No user"});
-        }
+      const updateFields = {
+        name, age, location, pronouns, genderIdentity,
+        datePreference, relationshipType, ethnicity,
+        religion, bio, education, job,
+        profileImage,
+        ...aboutYouFields 
+      };
+  
+      const updatedUser = await User.findOneAndUpdate(
+        { auth0UserId },
+        updateFields,
+        { new: true, upsert: true }
+      );
+  
 
         res.status(200).json({ message: "User updated successfully "});
 
