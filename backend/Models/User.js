@@ -21,7 +21,6 @@ const UserSchema = new mongoose.Schema({
     bio: {type: String},  
     education: {type: String},
     job: {type: String},
-    auth0UserId: {type: String},
     swipedOn: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     acceptedUsers: [String], 
     declinedUsers: [String],
