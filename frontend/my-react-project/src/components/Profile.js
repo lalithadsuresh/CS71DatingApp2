@@ -38,6 +38,7 @@ const Profile = () => {
     nextCity: ''
   });
   const [profileImage, setProfileImage] = useState(null);
+  const [editProfileImage, seteditProfileImage] = useState(null);
   const [isLoading, setIsLoading] = useState(true); 
 
   useEffect(() => {
@@ -55,6 +56,7 @@ const Profile = () => {
             age: profile.age || '',
             location: profile.location || '',
             pronouns: profile.pronouns || '',
+            profileImage: profile.profileImage || '', 
             genderIdentity: profile.genderIdentity || '',
             datePreference: profile.datePreference || '',
             relationshipType: profile.relationshipType || '',
@@ -80,6 +82,8 @@ const Profile = () => {
             travelDestination: profile.travelDestination || '',
             nextCity: profile.nextCity || ''
           });
+
+          seteditProfileImage(profile.profileImage || '');
         }
       } catch (err) {
         console.error("Error fetching profile", err);
@@ -246,6 +250,12 @@ const handleImageChange = (e) => {
               onChange={handleImageChange}
             />
           </div>
+
+      
+            <img className = "profile-img"
+            src={`http://localhost:5001/${editProfileImage}`}
+            alt="Current Profile"
+            />
 
           <button type="submit" className="button">
             Save Changes

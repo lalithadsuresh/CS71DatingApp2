@@ -52,7 +52,11 @@ const Matches = () => {
                 <p className="text">Age: {match.age}</p>
                 <p className="text">Location: {match.location}</p>
                 <p className="bio">{match.bio}</p>
-
+                <img
+                  src={`http://localhost:5001/${match.profileImage}`}
+                  alt={`${match.name}'s profile`}
+                  className="profile-img"
+                />
                 <div className="button">
                   <button onClick={() => handleUnmatch(match.auth0UserId)}>Unmatch</button>
                 </div>
