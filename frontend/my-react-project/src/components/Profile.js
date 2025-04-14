@@ -106,43 +106,48 @@ const Profile = () => {
   };
 
 const handleImageChange = (e) => {
-  setProfileImage(e.target.files[0]);
+  const file = e.target.files[0];
+  setProfileImage(file);
+
+  if (file) {
+    seteditProfileImage(URL.createObjectURL(file));
+  }
 };
 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log("Submitting form...");
-    console.log("Form data:", formData);
-  
-    const submission = new FormData();
-    for (const key in formData) {
-      submission.append(key, formData[key]);
-    }
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  console.log("Form data:", formData);
+
+  try {
+    let imageUrl = editProfileImage;
+
     if (profileImage) {
-      submission.append("profileImage", profileImage);
-    }
-    submission.append("auth0UserId", user.sub);
-  
-    try {
-      const response = await axios.put(
-        "http://localhost:5001/api/users/update",
-        submission,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+      const data = new FormData();
+      data.append("file", profileImage);
+      data.append("upload_preset", "cloudinary_unmasked");
+
+      const cloudinaryRes = await axios.post(
+        "https://api.cloudinary.com/v1_1/dmnlqvcqt/image/upload", 
+        data
       );
-  
-      console.log("Response from server:", response.data);
-      alert("Changes saved!");
-    } catch (err) {
-      console.error("Error saving profile", err.response?.data || err.message);
-      alert("Failed to save changes.");
+
+      imageUrl = cloudinaryRes.data.secure_url;
+      console.log(imageUrl);
     }
-  };
-  
+
+    const updatedProfile = {
+      ...formData,
+      profileImage: imageUrl,
+      auth0UserId: user.sub,
+    };
+
+    const response = await axios.put("http://localhost:5001/api/users/update", updatedProfile);
+  } catch (err) {
+    console.error("Error");
+  }
+};
+
 
   return (
 
@@ -251,11 +256,9 @@ const handleImageChange = (e) => {
             />
           </div>
 
-      
-            <img className = "profile-img"
-            src={`http://localhost:5001/${editProfileImage}`}
-            alt="Current Profile"
-            />
+          {editProfileImage && (
+            <img className="profile-img" src={editProfileImage} alt="Current Profile" />
+          )}
 
           <button type="submit" className="button">
             Save Changes
