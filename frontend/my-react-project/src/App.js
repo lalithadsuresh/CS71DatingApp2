@@ -2,7 +2,6 @@ import logo from './logo.svg';
 import './App.css';
 import Homepage from './components/Homepage';
 import Matches from './components/Matches';
-import Settings from './components/Settings';
 import Profile from './components/Profile';
 import LoginButton from './components/LoginButton';
 import LogoutButton from './components/LogoutButton';
@@ -26,7 +25,6 @@ function App() {
         <Route path="/homepage" element={<Homepage />} />
         <Route path="/matches" element={<Matches />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/settings" element={<Settings />} />
         <Route path="/login" element={<AuthenticatePage />} />
         <Route path="/registration" element={<Registration />} />
         <Route path="/form" element={<Form />} />

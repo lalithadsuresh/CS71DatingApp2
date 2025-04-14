@@ -21,7 +21,6 @@ function Navbar() {
           <div className="nav-links">
             <LogoutButton visible={true}/>
             <Link to="/matches" className="link">Your Matches</Link>
-            <Link to="/settings" className="link">Settings</Link>
             <Link to="/profile" className="link">Profile</Link>
             <button 
               className="match-button" 
