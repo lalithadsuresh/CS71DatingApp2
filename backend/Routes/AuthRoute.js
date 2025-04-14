@@ -133,15 +133,50 @@ router.get('/profile/:auth0UserId', async (req, res) => {
   router.put('/update', upload.single('profileImage'), async (req, res) => {
     //console.log("Received update payload:", req.body);
   
+
     const { auth0UserId, ...updates } = req.body;
     if (req.file) {
       updates.profileImage = req.file.path;
     }
-  
+
+    const aboutFields = [
+      "hobbies", "dealbreakers", "bestJoke", "dinnerGuest", "perfectDay",
+      "finalMeal", "mostGrateful", "accomplishment", "valueFriendship",
+      "treasuredMemory", "terribleMemory", "loveLanguage", "lastCried",
+      "seriousJoke", "travelDestination", "nextCity"
+    ];
+
+    const filteredAbout = {};
+
+    const fieldsToSet = {};
+    const fieldsToUnset = {};
+
+    // Tells MongoDB to remove a field or keep it
+    for (const field of aboutFields) {
+      if (field in updates) {
+        fieldsToSet[field] = updates[field];
+      } else {
+        fieldsToUnset[field] = "";  
+      }
+    }
+
+    if (req.file) {
+      updates.profileImage = req.file.path;
+    }
+    
     try {
+      
+      const updateQuery = {
+        $set: {
+          ...updates,
+          ...fieldsToSet,
+        },
+        $unset: fieldsToUnset,
+      };
+  
       const updatedUser = await User.findOneAndUpdate(
         { auth0UserId },
-        { $set: updates },
+        updateQuery,
         { new: true }
       );
   

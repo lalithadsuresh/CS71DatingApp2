@@ -20,26 +20,15 @@ const Profile = () => {
     bio: '',
     education: '',
     job: '',
-    hobbies: '',
-    dealbreakers: '',
-    bestJoke: '',
-    dinnerGuest: '',
-    perfectDay: '',
-    finalMeal: '',
-    mostGrateful: '',
-    accomplishment: '',
-    valueFriendship: '',
-    treasuredMemory: '',
-    terribleMemory: '',
-    loveLanguage: '',
-    lastCried: '',
-    seriousJoke: '',
-    travelDestination: '',
-    nextCity: ''
+    
   });
+  
   const [profileImage, setProfileImage] = useState(null);
-  const [editProfileImage, seteditProfileImage] = useState(null);
+  const [editProfileImage, setEditProfileImage] = useState(null);
   const [isLoading, setIsLoading] = useState(true); 
+  const [aboutAnswers, setAboutAnswers] = useState({});
+  const [selectedQuestions, setSelectedQuestions] = useState([]);
+
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -65,26 +54,30 @@ const Profile = () => {
             bio: profile.bio || '',
             education: profile.education || '',
             job: profile.job || '',
-            hobbies: profile.hobbies || '',
-            dealbreakers: profile.dealbreakers || '',
-            bestJoke: profile.bestJoke || '',
-            dinnerGuest: profile.dinnerGuest || '',
-            perfectDay: profile.perfectDay || '',
-            finalMeal: profile.finalMeal || '',
-            mostGrateful: profile.mostGrateful || '',
-            accomplishment: profile.accomplishment || '',
-            valueFriendship: profile.valueFriendship || '',
-            treasuredMemory: profile.treasuredMemory || '',
-            terribleMemory: profile.terribleMemory || '',
-            loveLanguage: profile.loveLanguage || '',
-            lastCried: profile.lastCried || '',
-            seriousJoke: profile.seriousJoke || '',
-            travelDestination: profile.travelDestination || '',
-            nextCity: profile.nextCity || ''
           });
 
-          seteditProfileImage(profile.profileImage || '');
+          const aboutFields = [
+            "hobbies", "dealbreakers", "bestJoke", "dinnerGuest", "perfectDay", "finalMeal",
+            "mostGrateful", "accomplishment", "valueFriendship", "treasuredMemory",
+            "terribleMemory", "loveLanguage", "lastCried", "seriousJoke", "travelDestination", "nextCity"
+          ];
+  
+          const answered = [];
+          const answers = {};
+
+          aboutFields.forEach((field) => {
+            if (profile[field]) {
+              answered.push(field);
+              answers[field] = profile[field];
+            }
+          });
+
+          setSelectedQuestions(answered);
+          setAboutAnswers(answers);
+          setEditProfileImage(profile.profileImage || '');
+          
         }
+      
       } catch (err) {
         console.error("Error fetching profile", err);
       } finally {
@@ -99,50 +92,63 @@ const Profile = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value
-    }));
+    if (selectedQuestions.includes(name)) {
+      setAboutAnswers((prev) => ({ ...prev, [name]: value }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
 const handleImageChange = (e) => {
   setProfileImage(e.target.files[0]);
 };
 
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log("Submitting form...");
-    console.log("Form data:", formData);
-  
-    const submission = new FormData();
-    for (const key in formData) {
-      submission.append(key, formData[key]);
-    }
-    if (profileImage) {
-      submission.append("profileImage", profileImage);
-    }
-    submission.append("auth0UserId", user.sub);
-  
-    try {
-      const response = await axios.put(
-        "http://localhost:5001/api/users/update",
-        submission,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-  
-      console.log("Response from server:", response.data);
-      alert("Changes saved!");
-    } catch (err) {
-      console.error("Error saving profile", err.response?.data || err.message);
-      alert("Failed to save changes.");
-    }
-  };
-  
+  const submission = new FormData();
+  Object.keys(formData).forEach((field) => {
+    submission.append(field, formData[field]);
+  });
+  selectedQuestions.forEach((field) => {
+    submission.append(field, aboutAnswers[field] || '');
+  });
+  if (profileImage) {
+    submission.append("profileImage", profileImage);
+  }
+  submission.append("auth0UserId", user.sub);
+
+  try {
+    const response = await axios.put("http://localhost:5001/api/users/update", submission, {
+      headers: { "Content-Type": "multipart/form-data" }
+    });
+
+    alert("Changes saved!");
+  } catch (err) {
+    console.error("Error saving profile", err);
+    alert("Failed to save changes.");
+  }
+};
+
+const aboutYouOptions = [
+  { label: "What are your hobbies?", name: "hobbies" },
+  { label: "What are your dealbreakers?", name: "dealbreakers" },
+  { label: "What is your best joke?", name: "bestJoke" },
+  { label: "Who would you want as a dinner guest?", name: "dinnerGuest" },
+  { label: "What would be a 'perfect' day for you?", name: "perfectDay" },
+  { label: "What would your final meal be?", name: "finalMeal" },
+  { label: "What are you most grateful for in your life?", name: "mostGrateful" },
+  { label: "What’s your greatest accomplishment?", name: "accomplishment" },
+  { label: "What do you value most in a friendship?", name: "valueFriendship" },
+  { label: "What’s your most treasured memory?", name: "treasuredMemory" },
+  { label: "What’s your most terrible memory?", name: "terribleMemory" },
+  { label: "What is your love language?", name: "loveLanguage" },
+  { label: "When was the last time you cried and why?", name: "lastCried" },
+  { label: "What, if anything, is too serious to be joked about?", name: "seriousJoke" },
+  { label: "Favorite travel destination?", name: "travelDestination" },
+  { label: "Which country/city do you want to visit next?", name: "nextCity" }
+];
+
 
   return (
 
@@ -207,37 +213,42 @@ const handleImageChange = (e) => {
           </div>
 
 
-          <h4 className="mt-5">About You </h4>
-
-            {[
-              { label: "What are your hobbies?", name: "hobbies" },
-              { label: "What are your dealbreakers?", name: "dealbreakers" },
-              { label: "What is your best joke?", name: "bestJoke" },
-              { label: "Who would you want as a dinner guest?", name: "dinnerGuest" },
-              { label: "What would be a 'perfect' day for you?", name: "perfectDay" },
-              { label: "What would your final meal be?", name: "finalMeal" },
-              { label: "What are you most grateful for in your life?", name: "mostGrateful" },
-              { label: "What’s your greatest accomplishment?", name: "accomplishment" },
-              { label: "What do you value most in a friendship?", name: "valueFriendship" },
-              { label: "What’s your most treasured memory?", name: "treasuredMemory" },
-              { label: "What’s your most terrible memory?", name: "terribleMemory" },
-              { label: "What is your love language?", name: "loveLanguage" },
-              { label: "When was the last time you cried and why?", name: "lastCried" },
-              { label: "What, if anything, is too serious to be joked about?", name: "seriousJoke" },
-              { label: "Favorite travel destination?", name: "travelDestination" },
-              { label: "Which country/city do you want to visit next?", name: "nextCity" }
-            ].map((field, idx) => (
-              <div className="text" key={idx}>
-                <label htmlFor={field.name}>{field.label}</label>
+          <h4 className="mt-5">About You</h4>
+          {aboutYouOptions.map((q, idx) => (
+            <div className="text" key={idx}>
+              <div className="form-check mb-2">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id={`checkbox-${q.name}`}
+                  checked={selectedQuestions.includes(q.name)}
+                  disabled={
+                    !selectedQuestions.includes(q.name) &&
+                    selectedQuestions.length >= 5
+                  }
+                  onChange={() => {
+                    setSelectedQuestions((prev) =>
+                      prev.includes(q.name)
+                        ? prev.filter((qn) => qn !== q.name)
+                        : [...prev, q.name]
+                    );
+                  }}
+                />
+                <label className="form-check-label" htmlFor={`checkbox-${q.name}`}>
+                  {q.label}
+                </label>
+              </div>
+              {selectedQuestions.includes(q.name) && (
                 <textarea
-                  name={field.name}
-                  value={formData[field.name]}
-                  className="form-control"
-                  id={field.name}
+                  name={q.name}
+                  value={aboutAnswers[q.name] || ''}
+                  className="form-control mb-3"
+                  id={q.name}
                   rows="2"
                   onChange={handleChange}
                 />
-              </div>
+              )}
+            </div>
           ))}
 
 
