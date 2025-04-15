@@ -59,9 +59,7 @@ const Matches = () => {
                   alt={`${match.name}'s profile`}
                   className="profile-img"
                 />
-                                <div className="button">
-                  <button onClick={() => handleUnmatch(match.auth0UserId)}>Unmatch</button>
-                </div>
+                  <button classname="cardbutton" onClick={() => handleUnmatch(match.auth0UserId)}>Unmatch</button>
               </div>
             ))}
           </div>

@@ -262,15 +262,22 @@ const aboutYouOptions = [
             />
           </div>
 
-      
+          {editProfileImage && (
+            <img className="profile-img" src={editProfileImage} alt="Current Profile" />
+          )}
+=======
             <img className = "profile-img"
             src={`http://localhost:5001/${editProfileImage}`}
             alt="Current Profile"
             />
+>>>>>>> Stashed changes
 
           <button type="submit" className="button">
             Save Changes
           </button>
+          </div>
+
+      
         </form>
       </div>
     </div>
