@@ -8,6 +8,8 @@ const Homepage = () => {
   const { user, isLoading } = useAuth0();
   const [users, setUsers] = useState([]);
   const [matches, setMatches] = useState([]);
+  const [flippedCards, setFlippedCards] = useState({}) ;
+
   console.log("Is loading:", isLoading);
   console.log("Users:", users);
   
@@ -83,7 +85,13 @@ const Homepage = () => {
     }
   };
 
-  
+  const toggleFlip = (userId) => {
+    setFlippedCards((prev) => ({
+      ...prev,
+      [userId]: !prev[userId],
+    })
+    )
+  }
 
   // get all users in database that the current user hasn't swiped on
   // display them as cards here 
@@ -101,20 +109,42 @@ const Homepage = () => {
         ) : users.length === 0 ? (
           <p className="text">No users to display.</p>
         ) : (
-          users.map((u) => (
-            <div key={u.auth0UserId} className="profile-card">
-              <h2>{u.name}</h2>
-              <p className = "text" >{u.age}</p>
-              <p className = "text" >{u.location}</p>
-              <p  className = "bio" >{u.bio}</p>
+          users.map((u) => {
+            const isFlipped = flippedCards[u.auth0UserId] || false;
 
-              <div className="card-buttons">
-                <button onClick={() => handleAccept(u)}>Accept</button>
-                <button onClick={() => handleDecline(u)}>Decline</button>
+            return (
+              <div
+                key={u.auth0UserId}
+                className={`profile-card flip-container ${isFlipped ? "flipped" : ""}`}
+                onClick={() => toggleFlip(u.auth0UserId)}
+              >
+                <div className="flipper">
+                  {/* FRONT */}
+                  <div className="front">
+                    <h2>{u.name} - {u.pronouns}</h2>
+
+                    <div className="cardinfo">
+                      <p className="cardtext">{u.age}</p>
+                      <p className="cardtext">{u.location}</p>
+                      <p className="cardtext">{u.job}</p> 
+                      <p className='cardtext'>{u.relationshipType}</p>
+                      <h3>Bio:</h3>                      
+                      <p className="bio">{u.bio}</p>
+                  
+                    </div>
+                  </div>
+
+                  {/* BACK */}
+                  <div className="back">
+                    <div className="card-buttons">
+                      <button className = "cardbutton" onClick={(e) => { e.stopPropagation(); handleAccept(u); }}>Accept</button>
+                      <button className = "cardbutton" onClick={(e) => { e.stopPropagation(); handleDecline(u); }}>Decline</button>
+                    </div>
+                  </div>
+                </div>
               </div>
-
-            </div>
-          ))
+            );
+          })
         )}
       </div>
     </div>
