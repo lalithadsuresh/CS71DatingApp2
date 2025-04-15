@@ -30,6 +30,7 @@ const Matches = () => {
       try {
         const res = await axios.get(`http://localhost:5001/api/profile/getMatches/${user.sub}`);
         setMatches(res.data || []);
+        console.log(res.data);
       } catch (err) {
         console.error("Error fetching matches:", err);
       }
@@ -52,12 +53,13 @@ const Matches = () => {
                 <p className="text">Age: {match.age}</p>
                 <p className="text">Location: {match.location}</p>
                 <p className="bio">{match.bio}</p>
+
                 <img
-                  src={`http://localhost:5001/${match.profileImage}`}
+                  src={match.profileImage}
                   alt={`${match.name}'s profile`}
                   className="profile-img"
                 />
-                <div className="button">
+                                <div className="button">
                   <button onClick={() => handleUnmatch(match.auth0UserId)}>Unmatch</button>
                 </div>
               </div>

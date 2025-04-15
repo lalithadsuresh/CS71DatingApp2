@@ -1,8 +1,10 @@
 const express = require('express');
 const User = require('../Models/User');
 const router = express.Router();
-const multer = require('multer');
 const path = require('path');
+
+const multer = require('multer');
+const upload = multer({ storage: multer.memoryStorage() });
 
 // Multer for image upload
 const storage = multer.diskStorage({
@@ -12,8 +14,34 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
   }
+})
+
+
+router.post('/upload', upload.single('file'), async (req, res) => {
+  try {
+    const result = await cloudinary.uploader.upload_stream(
+      {
+      },
+      async (error, result) => {
+        if (error) {
+          console.error("Cloudinary upload error:", error);
+          return res.status(500).json({ error: 'Upload failed' });
+        }
+
+        const user = await User.findOne({ auth0UserId: req.body.userId });
+        user.profileImage = result.secure_url;
+        await user.save();
+
+        res.status(200).json({ message: "Uploaded successfully", url: result.secure_url });
+      }
+    );
+
+    result.end(req.file.buffer);
+  } catch (err) {
+    console.error("Error:", err);
+    res.status(500).json({ error: 'Something went wrong' });
+  }
 });
-const upload = multer({ storage });
 
 router.post('/sync', async (req, res) => {
 
