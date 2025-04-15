@@ -11,7 +11,7 @@ const Registration = () => {
     const [formData, setFormData] = useState({
       name: '', age: '', location: '', pronouns: '', genderIdentity: '',
       datePreference: '', relationshipType: '', ethnicity: '', religion: '',
-      bio: '', education: '', job: ''
+      bio: '', education: '', job: '', socialMediaHandle: ''
     });
   
     const [aboutAnswers, setAboutAnswers] = useState({});
@@ -130,7 +130,7 @@ const Registration = () => {
               { label: "Gender Identity", name: "genderIdentity" },
               { label: "Sexuality", name: "datePreference" },
               { label: "Ethnicity", name: "ethnicity" }, { label: "Religion", name: "religion" },
-              { label: "Education", name: "education" }, { label: "Job", name: "job" }
+              { label: "Education", name: "education" }, { label: "Job", name: "job" }, { label: "Social Media Handle", name: "socialMediaHandle"}
             ].map(({ label, name, type = "text" }) => (
               <div className="text" key={name}>
                 <label htmlFor={name}>{label}</label>

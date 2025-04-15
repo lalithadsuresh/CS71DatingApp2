@@ -41,7 +41,8 @@ const UserSchema = new mongoose.Schema({
     lastCried: { type: String },
     seriousJoke: { type: String },
     travelDestination: { type: String },
-    nextCity: { type: String }
+    nextCity: { type: String },
+    socialMediaHandle: {type: String}
       
 
 })
