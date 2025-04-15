@@ -129,7 +129,7 @@ const Profile = () => {
             { label: "Gender Identity", name: "genderIdentity" },
             { label: "Sexuality", name: "datePreference" },
             { label: "Ethnicity", name: "ethnicity" }, { label: "Religion", name: "religion" },
-            { label: "Education", name: "education" }, { label: "Job", name: "job" }, { label: "Social Media Handle", name: "socialmediaHandle"}
+            { label: "Education", name: "education" }, { label: "Job", name: "job" }, { label: "Social Media Handle", name: "socialMediaHandle"}
           ].map(({ label, name, type = "text" }) => (
             <div className="text" key={name}>
               <label htmlFor={name}>{label}</label>
