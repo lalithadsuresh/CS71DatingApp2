@@ -152,7 +152,6 @@ router.get('/profile/:auth0UserId', async (req, res) => {
   });
 
   router.put('/update', upload.single('profileImage'), async (req, res) => {
-    //console.log("Received update payload:", req.body);
   
 
     const { auth0UserId, ...updates } = req.body;

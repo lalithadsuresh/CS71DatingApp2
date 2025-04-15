@@ -111,7 +111,7 @@ const Registration = () => {
         };
   
         const res = await axios.put("http://localhost:5001/api/users/update", updatedProfile);
-        alert("Changes saved!");
+        navigate("/matches");
       } catch (err) {
         console.error("Error saving profile", err);
         alert("Failed to save changes.");
@@ -122,7 +122,7 @@ const Registration = () => {
       <div className="page">
         <div className="container">
           <form onSubmit={handleSubmit} encType="multipart/form-data">
-            <h2 className="title">Edit Info</h2>
+            <h2 className="title">Register</h2>
   
             {[
               { label: "Name", name: "name" }, { label: "Age", name: "age", type: "number" },
@@ -210,7 +210,7 @@ const Registration = () => {
             ))}
   
             <div className="form-group mb-4">
-              <label htmlFor="profileImage">Update Profile Image</label>
+              <label htmlFor="profileImage">Profile Image</label>
               <input
                 type="file"
                 accept="image/*"
@@ -223,7 +223,7 @@ const Registration = () => {
               <img className="profile-img" src={editProfileImage} alt="Current Profile" />
             )}
   
-            <button type="submit" className="button">Save Changes</button>
+            <button type="submit" className="button">Submit</button>
           </form>
         </div>
       </div>
