@@ -8,52 +8,58 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    name: '',
-    age: '',
-    location: '',
-    pronouns: '',
-    genderIdentity: '',
-    datePreference: '',
-    relationshipType: '',
-    ethnicity: '',
-    religion: '',
-    bio: '',
-    education: '',
-    job: '',
-    hobbies: '',
-    dealbreakers: '',
-    bestJoke: '',
-    dinnerGuest: '',
-    perfectDay: '',
-    finalMeal: '',
-    mostGrateful: '',
-    accomplishment: '',
-    valueFriendship: '',
-    treasuredMemory: '',
-    terribleMemory: '',
-    loveLanguage: '',
-    lastCried: '',
-    seriousJoke: '',
-    travelDestination: '',
-    nextCity: ''
+    name: '', age: '', location: '', pronouns: '', genderIdentity: '',
+    datePreference: '', relationshipType: '', ethnicity: '', religion: '',
+    bio: '', education: '', job: ''
   });
 
+  const [aboutAnswers, setAboutAnswers] = useState({});
+  const [selectedQuestions, setSelectedQuestions] = useState([]);
   const [profileImage, setProfileImage] = useState(null);
-  const [editProfileImage, seteditProfileImage] = useState(null);
+  const [editProfileImage, setEditProfileImage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const aboutYouOptions = [
+    { label: "What are your hobbies?", name: "hobbies" },
+    { label: "What are your dealbreakers?", name: "dealbreakers" },
+    { label: "What is your best joke?", name: "bestJoke" },
+    { label: "Who would you want as a dinner guest?", name: "dinnerGuest" },
+    { label: "What would be a 'perfect' day for you?", name: "perfectDay" },
+    { label: "What would your final meal be?", name: "finalMeal" },
+    { label: "What are you most grateful for in your life?", name: "mostGrateful" },
+    { label: "What’s your greatest accomplishment?", name: "accomplishment" },
+    { label: "What do you value most in a friendship?", name: "valueFriendship" },
+    { label: "What’s your most treasured memory?", name: "treasuredMemory" },
+    { label: "What’s your most terrible memory?", name: "terribleMemory" },
+    { label: "What is your love language?", name: "loveLanguage" },
+    { label: "When was the last time you cried and why?", name: "lastCried" },
+    { label: "What, if anything, is too serious to be joked about?", name: "seriousJoke" },
+    { label: "Favorite travel destination?", name: "travelDestination" },
+    { label: "Which country/city do you want to visit next?", name: "nextCity" }
+  ];
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get(`http://localhost:5001/api/users/profile/${user?.sub}`);
-        if (response.data) {
-          const profile = response.data;
-          setFormData((prev) => ({
-            ...prev,
-            ...profile
-          }));
-          seteditProfileImage(profile.profileImage || '');
-        }
+        const res = await axios.get(`http://localhost:5001/api/users/profile/${user?.sub}`);
+        const profile = res.data;
+
+        const aboutFields = {};
+        const selected = [];
+        aboutYouOptions.forEach(opt => {
+          if (profile[opt.name]) {
+            aboutFields[opt.name] = profile[opt.name];
+            selected.push(opt.name);
+          }
+        });
+
+        setFormData((prev) => ({
+          ...prev,
+          ...profile
+        }));
+        setAboutAnswers(aboutFields);
+        setSelectedQuestions(selected);
+        setEditProfileImage(profile.profileImage || '');
       } catch (err) {
         console.error("Error fetching profile", err);
       } finally {
@@ -61,59 +67,52 @@ const Profile = () => {
       }
     };
 
-    if (user?.sub) {
-      fetchProfile();
-    }
+    if (user?.sub) fetchProfile();
   }, [user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value
-    }));
+    if (selectedQuestions.includes(name)) {
+      setAboutAnswers((prev) => ({ ...prev, [name]: value }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setProfileImage(file);
-    if (file) {
-      seteditProfileImage(URL.createObjectURL(file));
-    }
+    if (file) setEditProfileImage(URL.createObjectURL(file));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting profile data...");
-
     try {
       let imageUrl = editProfileImage;
 
-      if (profileImage) {
+      if (profileImage && typeof profileImage !== "string") {
         const data = new FormData();
         data.append("file", profileImage);
         data.append("upload_preset", "cloudinary_unmasked");
 
-        const cloudinaryRes = await axios.post(
+        const cloudRes = await axios.post(
           "https://api.cloudinary.com/v1_1/dmnlqvcqt/image/upload",
           data
         );
-
-        imageUrl = cloudinaryRes.data.secure_url;
-        console.log("Uploaded to Cloudinary:", imageUrl);
+        imageUrl = cloudRes.data.secure_url;
       }
 
       const updatedProfile = {
         ...formData,
+        ...aboutAnswers,
         profileImage: imageUrl,
-        auth0UserId: user.sub,
+        auth0UserId: user.sub
       };
 
-      const response = await axios.put("http://localhost:5001/api/users/update", updatedProfile);
-      console.log("Profile updated:", response.data);
+      const res = await axios.put("http://localhost:5001/api/users/update", updatedProfile);
       alert("Changes saved!");
     } catch (err) {
-      console.error("Error saving profile", err.response?.data || err.message);
+      console.error("Error saving profile", err);
       alert("Failed to save changes.");
     }
   };
@@ -121,29 +120,91 @@ const Profile = () => {
   return (
     <div className="page">
       <div className="container">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
           <h2 className="title">Edit Info</h2>
 
           {[
-            "name", "age", "location", "pronouns", "genderIdentity", "datePreference",
-            "relationshipType", "ethnicity", "religion", "bio", "education", "job",
-            "hobbies", "dealbreakers", "bestJoke", "dinnerGuest", "perfectDay",
-            "finalMeal", "mostGrateful", "accomplishment", "valueFriendship",
-            "treasuredMemory", "terribleMemory", "loveLanguage", "lastCried",
-            "seriousJoke", "travelDestination", "nextCity"
-          ].map((field, idx) => (
-            <div className="form-group" key={idx}>
-              <label htmlFor={field}>
-                {field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, " $1")}
-              </label>
-              <textarea
-                name={field}
-                id={field}
-                value={formData[field]}
+            { label: "Name", name: "name" }, { label: "Age", name: "age", type: "number" },
+            { label: "Location", name: "location" }, { label: "Pronouns", name: "pronouns" },
+            { label: "Gender Identity", name: "genderIdentity" },
+            { label: "Who do you want to date? (Gender)", name: "datePreference" },
+            { label: "Ethnicity", name: "ethnicity" }, { label: "Religion", name: "religion" },
+            { label: "Education", name: "education" }, { label: "Job", name: "job" }
+          ].map(({ label, name, type = "text" }) => (
+            <div className="text" key={name}>
+              <label htmlFor={name}>{label}</label>
+              <input
+                type={type}
+                name={name}
+                value={formData[name] || ''}
                 className="form-control"
                 onChange={handleChange}
-                rows="2"
               />
+            </div>
+          ))}
+
+          <div className="text">
+            <label htmlFor="relationshipType">Relationship Type</label>
+            <select
+              name="relationshipType"
+              value={formData.relationshipType}
+              className="form-control"
+              onChange={handleChange}
+            >
+              <option value="">Select an option</option>
+              <option>Life Partner</option>
+              <option>Long-term Relationship</option>
+              <option>Short-term Relationship</option>
+              <option>Unsure</option>
+              <option>Prefer not to say</option>
+            </select>
+          </div>
+
+          <div className="text">
+            <label htmlFor="bio">Short Bio</label>
+            <textarea
+              name="bio"
+              value={formData.bio}
+              className="form-control"
+              id="bio"
+              rows="3"
+              onChange={handleChange}
+            />
+          </div>
+
+          <h4 className="mt-4">About You (Choose up to 5)</h4>
+          {aboutYouOptions.map(({ label, name }) => (
+            <div className="text" key={name}>
+              <div className="form-check mb-2">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id={`checkbox-${name}`}
+                  checked={selectedQuestions.includes(name)}
+                  disabled={
+                    !selectedQuestions.includes(name) && selectedQuestions.length >= 5
+                  }
+                  onChange={() => {
+                    setSelectedQuestions((prev) =>
+                      prev.includes(name)
+                        ? prev.filter((qn) => qn !== name)
+                        : [...prev, name]
+                    );
+                  }}
+                />
+                <label className="form-check-label" htmlFor={`checkbox-${name}`}>
+                  {label}
+                </label>
+              </div>
+              {selectedQuestions.includes(name) && (
+                <textarea
+                  name={name}
+                  value={aboutAnswers[name] || ''}
+                  className="form-control mb-3"
+                  rows="2"
+                  onChange={handleChange}
+                />
+              )}
             </div>
           ))}
 
