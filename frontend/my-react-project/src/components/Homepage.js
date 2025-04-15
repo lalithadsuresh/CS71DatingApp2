@@ -8,6 +8,8 @@ const Homepage = () => {
   const { user, isLoading } = useAuth0();
   const [users, setUsers] = useState([]);
   const [matches, setMatches] = useState([]);
+  const [flippedCards, setFlippedCards] = useState({}) ;
+
   console.log("Is loading:", isLoading);
   console.log("Users:", users);
   
@@ -83,7 +85,13 @@ const Homepage = () => {
     }
   };
 
-  
+  const toggleFlip = (userId) => {
+    setFlippedCards((prev) => ({
+      ...prev,
+      [userId]: !prev[userId],
+    })
+    )
+  }
 
   // get all users in database that the current user hasn't swiped on
   // display them as cards here 
@@ -114,11 +122,16 @@ const Homepage = () => {
                   {/* FRONT */}
                   <div className="front">
                     <h2>{u.name} - {u.pronouns}</h2>
-                    <p className="cardtext">{u.age}</p>
-                    <p className="cardtext">{u.location}</p>
-                    <p className="cardtext">{u.job}</p> 
-                    <p className='cardtext'>{u.relationshipType}</p>
-                    <p className="bio">{u.bio}</p>
+
+                    <div className="cardinfo">
+                      <p className="cardtext">{u.age}</p>
+                      <p className="cardtext">{u.location}</p>
+                      <p className="cardtext">{u.job}</p> 
+                      <p className='cardtext'>{u.relationshipType}</p>
+                      <h3>Bio:</h3>                      
+                      <p className="bio">{u.bio}</p>
+                  
+                    </div>
                   </div>
 
                   {/* BACK */}
@@ -130,9 +143,8 @@ const Homepage = () => {
                   </div>
                 </div>
               </div>
-
-            </div>
-          ))
+            );
+          })
         )}
       </div>
     </div>
