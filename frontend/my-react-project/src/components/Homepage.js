@@ -95,7 +95,7 @@ const Homepage = () => {
     <div className="page">
       <div className="container">
         <h1 className="titleMain">Unmasked</h1>
-        <p className="subtitle">No pictures, just personality - unmask your true connection.</p>
+        <p className="subtitle">Personality first, pictures second - unmask your true connection.</p>
       </div>
 
       <div className="card-wrapper">
@@ -145,6 +145,9 @@ const Homepage = () => {
                             </li>
                           ))}
                       </ul>
+                      <img className="profile-img"
+                      src = {u.profileImage}>
+                      </img>
                     </div>
 
 

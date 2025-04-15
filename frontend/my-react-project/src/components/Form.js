@@ -93,6 +93,11 @@ const Form = () => {
           <input type="text" className="form-control" id="job" />
         </div>
 
+        <div className="form-group mb-5">
+          <label htmlFor="job">Social Media Handle</label>
+          <input type="text" className="form-control" id="socialMediaHandle" />
+        </div>
+
         {/* <h4 className="mt-5 mb-4">Questions</h4> */}
 
         {/* {[

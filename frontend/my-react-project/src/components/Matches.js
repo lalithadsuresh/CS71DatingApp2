@@ -49,10 +49,26 @@ const Matches = () => {
           <div className='card-wrapper'>
             {matches.map((match) => (
               <div key={match.auth0UserId} className='profile-card'>
-                <h2>{match.name}</h2>
-                <p className="text">Age: {match.age}</p>
-                <p className="text">Location: {match.location}</p>
-                <p className="bio">{match.bio}</p>
+
+                <div className="flipper">
+                  {/* FRONT */}
+                  <div className="front">
+                    <h2>
+                      {match.name} - {match.pronouns}
+                    </h2>
+                    <div className="cardinfo">
+                      <p className="cardtext">Age: {match.age}</p>
+                      <p className="cardtext">Location: {match.location}</p>
+                      <p className="cardtext">Job: {match.job}</p> 
+                      <p className='cardtext'>{match.relationshipType}</p>
+                      <p className='cardtext'>Education: {match.education}</p>
+                      <p className='cardtext'>Sexuality: {match.datePreference}</p>
+                    </div>
+                      <h3>Bio:</h3>                      
+                      <p className="bio">{match.bio}</p>
+                  </div>
+                </div>
+                <p className="bio"> Social Media: {match.socialMediaHandle}</p>
 
                 <img
                   src={match.profileImage}

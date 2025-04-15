@@ -101,16 +101,9 @@ router.post('/register', upload.single('profileImage'), async (req, res) => {
 
 
     const { name, age, location, pronouns, genderIdentity,
-        datePreference,
-        relationshipType,
-        ethnicity,
-        religion,
-        bio,
-        education,
-        job,
-        auth0UserId, 
-        ...aboutYouFields
-      } = req.body;
+    datePreference, relationshipType, ethnicity, religion,
+    bio, education, job, auth0UserId, socialMediaHandle,
+    ...aboutYouFields } = req.body;
 
     const profileImage = req.file ? req.file.path : null;
 
@@ -120,8 +113,8 @@ router.post('/register', upload.single('profileImage'), async (req, res) => {
         name, age, location, pronouns, genderIdentity,
         datePreference, relationshipType, ethnicity,
         religion, bio, education, job,
-        profileImage,
-        ...aboutYouFields 
+        profileImage, socialMediaHandle, 
+        ...aboutYouFields
       };
   
       const updatedUser = await User.findOneAndUpdate(
