@@ -8,6 +8,25 @@ const Homepage = () => {
   const [users, setUsers] = useState([]);
   const [matches, setMatches] = useState([]);
   const [flippedCards, setFlippedCards] = useState({});
+  const aboutYouOptions = [
+    { label: "What are your hobbies?", name: "hobbies" },
+    { label: "What are your dealbreakers?", name: "dealbreakers" },
+    { label: "What is your best joke?", name: "bestJoke" },
+    { label: "Who would you want as a dinner guest?", name: "dinnerGuest" },
+    { label: "What would be a 'perfect' day for you?", name: "perfectDay" },
+    { label: "What would your final meal be?", name: "finalMeal" },
+    { label: "What are you most grateful for in your life?", name: "mostGrateful" },
+    { label: "What’s your greatest accomplishment?", name: "accomplishment" },
+    { label: "What do you value most in a friendship?", name: "valueFriendship" },
+    { label: "What’s your most treasured memory?", name: "treasuredMemory" },
+    { label: "What’s your most terrible memory?", name: "terribleMemory" },
+    { label: "What is your love language?", name: "loveLanguage" },
+    { label: "When was the last time you cried and why?", name: "lastCried" },
+    { label: "What, if anything, is too serious to be joked about?", name: "seriousJoke" },
+    { label: "Favorite travel destination?", name: "travelDestination" },
+    { label: "Which country/city do you want to visit next?", name: "nextCity" }
+  ];
+  
 
   useEffect(() => {
     const fetchUsersDisplayed = async () => {
@@ -100,15 +119,35 @@ const Homepage = () => {
                     <h2>
                       {u.name} - {u.pronouns}
                     </h2>
-                    <p className="cardtext">{u.age}</p>
-                    <p className="cardtext">{u.location}</p>
-                    <p className="cardtext">{u.job}</p>
-                    <p className="cardtext">{u.relationshipType}</p>
-                    <p className="bio">{u.bio}</p>
+                    <div className="cardinfo">
+                      <p className="cardtext">Age: {u.age}</p>
+                      <p className="cardtext">Location: {u.location}</p>
+                      <p className="cardtext">Job: {u.job}</p> 
+                      <p className='cardtext'>{u.relationshipType}</p>
+                      <p className='cardtext'>Education: {u.education}</p>
+                      <p className='cardtext'>Sexuality: {u.datePreference}</p>
+                    </div>
+                      <h3>Bio:</h3>                      
+                      <p className="bio">{u.bio}</p>
                   </div>
 
                   {/* BACK */}
                   <div className="back">
+                    <div className="about-section">
+                      <h4 className="about-header">About {u.name}</h4>
+                      <ul className="about-list">
+                        {aboutYouOptions
+                          .filter(({ name }) => u[name] && u[name].trim() !== "") // Only show non-empty answers
+                          .slice(0, 5) // Limit to 5
+                          .map(({ name, label }) => (
+                            <li key={name} className="about-item">
+                              <strong>{label}:</strong> {u[name]}
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+
+
                     <div className="card-buttons">
                       <button
                         className="cardbutton"

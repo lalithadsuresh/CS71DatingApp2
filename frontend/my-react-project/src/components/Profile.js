@@ -127,7 +127,7 @@ const Profile = () => {
             { label: "Name", name: "name" }, { label: "Age", name: "age", type: "number" },
             { label: "Location", name: "location" }, { label: "Pronouns", name: "pronouns" },
             { label: "Gender Identity", name: "genderIdentity" },
-            { label: "Who do you want to date? (Gender)", name: "datePreference" },
+            { label: "Sexuality", name: "datePreference" },
             { label: "Ethnicity", name: "ethnicity" }, { label: "Religion", name: "religion" },
             { label: "Education", name: "education" }, { label: "Job", name: "job" }
           ].map(({ label, name, type = "text" }) => (
@@ -172,7 +172,8 @@ const Profile = () => {
             />
           </div>
 
-          <h4 className="mt-4">About You (Choose up to 5)</h4>
+          <p></p>
+          <h4 className="text">About You (Choose up to 5)</h4>
           {aboutYouOptions.map(({ label, name }) => (
             <div className="text" key={name}>
               <div className="form-check mb-2">

@@ -12,6 +12,28 @@ body {
       width: 100%;
   }
 
+  .about-section {
+    padding: 0.5rem;
+    font-size: 0.95rem;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  
+  .about-header {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .about-list {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .about-item {
+    margin-bottom: 0.4rem;
+  }
+  
+
   .animated-text { /*not animating atm*/
     font-weight: bold;
     font-size: 60px;

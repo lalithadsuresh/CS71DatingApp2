@@ -128,7 +128,7 @@ const Registration = () => {
               { label: "Name", name: "name" }, { label: "Age", name: "age", type: "number" },
               { label: "Location", name: "location" }, { label: "Pronouns", name: "pronouns" },
               { label: "Gender Identity", name: "genderIdentity" },
-              { label: "Who do you want to date? (Gender)", name: "datePreference" },
+              { label: "Sexuality", name: "datePreference" },
               { label: "Ethnicity", name: "ethnicity" }, { label: "Religion", name: "religion" },
               { label: "Education", name: "education" }, { label: "Job", name: "job" }
             ].map(({ label, name, type = "text" }) => (
