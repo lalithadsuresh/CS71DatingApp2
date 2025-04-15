@@ -180,7 +180,7 @@ const Registration = () => {
                 </div>
 
                 <div className="text">
-                    <label htmlFor="datePreference">Who do you want to date? (Gender)</label>
+                    <label htmlFor="datePreference">Sexuality</label>
                     <input
                         type="text"
                         name="datePreference"

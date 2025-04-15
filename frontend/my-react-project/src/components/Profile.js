@@ -162,7 +162,7 @@ const handleSubmit = async (e) => {
             { label: "Location", name: "location", type: "text" },
             { label: "Pronouns", name: "pronouns", type: "text" },
             { label: "Gender Identity", name: "genderIdentity", type: "text" },
-            { label: "Who do you want to date? (Gender)", name: "datePreference", type: "text" },
+            { label: "Sexuality", name: "datePreference", type: "text" },
             { label: "Ethnicity", name: "ethnicity", type: "text" },
             { label: "Religion", name: "religion", type: "text" },
             { label: "Education", name: "education", type: "text" },
@@ -211,8 +211,8 @@ const handleSubmit = async (e) => {
             />
           </div>
 
-
-          <h4 className="mt-5">About You </h4>
+          <p></p>
+          <h4 className="text">About You </h4>
 
             {[
               { label: "What are your hobbies?", name: "hobbies" },
@@ -245,24 +245,34 @@ const handleSubmit = async (e) => {
               </div>
           ))}
 
-
-          <div className="form-group mb-4">
-            <label htmlFor="profileImage">Update Profile Image</label>
+          <p></p>
+          <div className="container">
+            <label className="text" htmlFor="profileImage">Update Profile Image</label>
             <input
               type="file"
               accept="image/*"
               className="form-control"
               onChange={handleImageChange}
             />
+<<<<<<< Updated upstream
           </div>
 
           {editProfileImage && (
             <img className="profile-img" src={editProfileImage} alt="Current Profile" />
           )}
+=======
+            <img className = "profile-img"
+            src={`http://localhost:5001/${editProfileImage}`}
+            alt="Current Profile"
+            />
+>>>>>>> Stashed changes
 
-          <button type="submit" className="button">
+          <button className="button" type="submit">
             Save Changes
           </button>
+          </div>
+
+      
         </form>
       </div>
     </div>
