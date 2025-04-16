@@ -151,41 +151,29 @@ router.get('/profile/:auth0UserId', async (req, res) => {
     }
   });
 
-  router.put('/update', upload.single('profileImage'), async (req, res) => {
-  
-
+  router.put('/update', async (req, res) => {
     const { auth0UserId, ...updates } = req.body;
-    if (req.file) {
-      updates.profileImage = req.file.path;
-    }
-
+  
     const aboutFields = [
       "hobbies", "dealbreakers", "bestJoke", "dinnerGuest", "perfectDay",
       "finalMeal", "mostGrateful", "accomplishment", "valueFriendship",
       "treasuredMemory", "terribleMemory", "loveLanguage", "lastCried",
       "seriousJoke", "travelDestination", "nextCity"
     ];
-
-    const filteredAbout = {};
-
+  
     const fieldsToSet = {};
     const fieldsToUnset = {};
-
-    // Tells MongoDB to remove a field or keep it
+  
+    // Ensure About You fields are correctly set or unset
     for (const field of aboutFields) {
       if (field in updates) {
         fieldsToSet[field] = updates[field];
       } else {
-        fieldsToUnset[field] = "";  
+        fieldsToUnset[field] = ""; // Unset if not present in updates
       }
     }
-
-    if (req.file) {
-      updates.profileImage = req.file.path;
-    }
-    
+  
     try {
-      
       const updateQuery = {
         $set: {
           ...updates,
@@ -210,7 +198,6 @@ router.get('/profile/:auth0UserId', async (req, res) => {
       res.status(500).json({ error: "Update failed" });
     }
   });
-  
   
 
 module.exports = router; 
