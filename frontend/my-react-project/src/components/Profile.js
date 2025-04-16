@@ -102,13 +102,18 @@ const Profile = () => {
         imageUrl = cloudRes.data.secure_url;
       }
 
+      const selectedAnswersOnly = {};
+      selectedQuestions.forEach((key) => {
+        selectedAnswersOnly[key] = aboutAnswers[key] || "";
+      });
+      
       const updatedProfile = {
         ...formData,
-        ...aboutAnswers,
+        ...selectedAnswersOnly,
         profileImage: imageUrl,
         auth0UserId: user.sub
       };
-
+      
       const res = await axios.put("http://localhost:5001/api/users/update", updatedProfile);
       alert("Changes saved!");
     } catch (err) {
