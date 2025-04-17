@@ -9,7 +9,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 // Multer for image upload
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // make sure 'uploads' folder exists
+    cb(null, 'uploads/'); 
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
@@ -17,6 +17,7 @@ const storage = multer.diskStorage({
 })
 
 
+// Endpoint (with Multer middleware)  that handles uploading the image
 router.post('/upload', upload.single('file'), async (req, res) => {
   try {
     const result = await cloudinary.uploader.upload_stream(
@@ -36,13 +37,14 @@ router.post('/upload', upload.single('file'), async (req, res) => {
       }
     );
 
-    result.end(req.file.buffer);
+    result.end(req.file.buffer); //tell Cloudinary to upload the image by closing the stream
   } catch (err) {
     console.error("Error:", err);
     res.status(500).json({ error: 'Something went wrong' });
   }
 });
 
+// create new user
 router.post('/sync', async (req, res) => {
 
     try {
@@ -69,6 +71,8 @@ router.post('/sync', async (req, res) => {
 
 });
 
+
+// Endpoint that returns whether a user's registration information is filled out 
 router.post('/registered', async (req, res) => {
 
 
@@ -96,6 +100,8 @@ router.post('/registered', async (req, res) => {
 
 
 });
+
+// Endpoint (with Multer middleware) that sends user's information to store in MongoDB
 
 router.post('/register', upload.single('profileImage'), async (req, res) => {
 
@@ -136,6 +142,8 @@ router.post('/register', upload.single('profileImage'), async (req, res) => {
 
 });
 
+
+// Find current profile 
 router.get('/profile/:auth0UserId', async (req, res) => {
     try {
       const user = await User.findOne({ auth0UserId: req.params.auth0UserId });
@@ -151,6 +159,8 @@ router.get('/profile/:auth0UserId', async (req, res) => {
     }
   });
 
+  // Update responses in profile editing section
+
   router.put('/update', async (req, res) => {
     const { auth0UserId, ...updates } = req.body;
   
@@ -164,17 +174,19 @@ router.get('/profile/:auth0UserId', async (req, res) => {
     const fieldsToSet = {};
     const fieldsToUnset = {};
   
-    // Ensure About You fields are correctly set or unset
     for (const field of aboutFields) {
       if (field in updates) {
+        // User sent a value for this field:
         fieldsToSet[field] = updates[field];
       } else {
-        fieldsToUnset[field] = ""; // Unset if not present in updates
+        // Client did NOT send it → we’ll unset it in the database
+        fieldsToUnset[field] = ""; 
       }
     }
   
     try {
       const updateQuery = {
+        // updating aboutFields accordingly using set and unset update operations
         $set: {
           ...updates,
           ...fieldsToSet,

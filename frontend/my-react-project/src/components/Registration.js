@@ -14,7 +14,7 @@ const Registration = () => {
       bio: '', education: '', job: '', socialMediaHandle: ''
     });
   
-    const [aboutAnswers, setAboutAnswers] = useState({});
+    const [aboutAnswers, setAboutAnswers] = useState({}); 
     const [selectedQuestions, setSelectedQuestions] = useState([]);
     const [profileImage, setProfileImage] = useState(null);
     const [editProfileImage, setEditProfileImage] = useState(null);
@@ -45,6 +45,7 @@ const Registration = () => {
           const res = await axios.get(`http://localhost:5001/api/users/profile/${user?.sub}`);
           const profile = res.data;
   
+          // Build initial "about" answers and selected question list from returned profile
           const aboutFields = {};
           const selected = [];
           aboutYouOptions.forEach(opt => {
@@ -79,7 +80,8 @@ const Registration = () => {
         setFormData((prev) => ({ ...prev, [name]: value }));
       }
     };
-  
+    
+     // Handles file input change, sets both the File object and preview URL
     const handleImageChange = (e) => {
       const file = e.target.files[0];
       setProfileImage(file);
@@ -90,7 +92,8 @@ const Registration = () => {
       e.preventDefault();
       try {
         let imageUrl = editProfileImage;
-  
+        
+        // Cloudinary code to upload the image 
         if (profileImage && typeof profileImage !== "string") {
           const data = new FormData();
           data.append("file", profileImage);
