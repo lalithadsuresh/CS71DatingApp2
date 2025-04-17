@@ -72,6 +72,7 @@ const Registration = () => {
       if (user?.sub) fetchProfile();
     }, [user]);
   
+    // 
     const handleChange = (e) => {
       const { name, value } = e.target;
       if (selectedQuestions.includes(name)) {
@@ -106,6 +107,7 @@ const Registration = () => {
           imageUrl = cloudRes.data.secure_url;
         }
   
+        
         const updatedProfile = {
           ...formData,
           ...aboutAnswers,
@@ -188,6 +190,8 @@ const Registration = () => {
                     disabled={
                       !selectedQuestions.includes(name) && selectedQuestions.length >= 5
                     }
+                    // for each aboutYou option, check if question has been selected, if yes, return an array without 
+                    // that question... (deselect) otherwise, return an array with the question (select)
                     onChange={() => {
                       setSelectedQuestions((prev) =>
                         prev.includes(name)
