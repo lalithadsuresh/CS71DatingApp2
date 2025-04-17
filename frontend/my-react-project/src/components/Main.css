@@ -87,6 +87,13 @@ body {
     font-weight: 600;
     color: #e37b78;
   }
+
+  .text-23 {
+    font-family:"Montserrat Alternates", sans-serif;
+    font-weight: 600;
+    color: #e37b78;
+    margin-top: 80px;
+  }
  
   .cardtext {
     font-family:"Montserrat Alternates", sans-serif;
@@ -139,6 +146,7 @@ body {
     text-align: center;
     font-weight: 600;
     color: #555;
+    margin-top: 50px;
   }
   
   .profile-card {

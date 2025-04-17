@@ -71,7 +71,7 @@ const Matches = () => {
       <div className="container">
         <h1 className="title">Matches</h1>
         {matches.length === 0 ? (
-          <p className="text">No matches yet. Keep swiping!</p>
+          <p className="text-23">No matches yet. Keep swiping!</p>
         ) : (
           <div className="card-wrapper">
             {matches.map((match) => {

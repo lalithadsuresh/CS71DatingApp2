@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 const UserSchema = new mongoose.Schema({
 
-    auth0UserId: {type: String, required: true},
+    auth0UserId: {type: String, required: true, unique: true},
     isRegistered: {type: Boolean, default: false},
     
     //profile info

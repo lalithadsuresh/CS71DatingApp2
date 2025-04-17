@@ -34,7 +34,7 @@ const AuthenticatePage = () => {
                     }
 
                 })
-                console.log('cess');
+
             })
             .catch((err) => {
                 console.error(err);
