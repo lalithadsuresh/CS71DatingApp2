@@ -15,9 +15,6 @@ function Navbar() {
       <nav className="Navbar">
         <div className="Navbar-container">
 
-          {/* Replace this with a working logo if you have one */}
-          {/* <Link to="/" className="navbar-logo">Unmasked</Link> */}
-
           <div className="nav-links">
             <LogoutButton visible={true}/>
             <Link to="/matches" className="link">Your Matches</Link>
