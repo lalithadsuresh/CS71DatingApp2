@@ -48,8 +48,8 @@ const Profile = () => {
         const selected = [];
         aboutYouOptions.forEach(opt => {
           if (profile[opt.name]) {
-            aboutFields[opt.name] = profile[opt.name];
-            selected.push(opt.name);
+            aboutFields[opt.name] = profile[opt.name]; // if user's profile has info, then update field accordingly
+            selected.push(opt.name); // record in selected array section
           }
         });
 
@@ -85,6 +85,7 @@ const Profile = () => {
     if (file) setEditProfileImage(URL.createObjectURL(file));
   };
 
+  // submit questions + registration / profile information
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

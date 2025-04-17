@@ -2,11 +2,18 @@ const express = require('express');
 const User = require('../Models/User');
 const router = express.Router();
 
+/*
+
 router.get('/test', async(req, res) => {
 
     res.send("Hi!");
 
 });
+
+*/
+
+
+// fetch all users that the current user swiped on
 
 router.get('/fetchusers/:currentUserId', async (req, res) => {
   const { currentUserId } = req.params;
@@ -16,6 +23,7 @@ router.get('/fetchusers/:currentUserId', async (req, res) => {
 
     if (!currentUser) return res.status(404).json({ message: "User not found" });
 
+    //using Spread operator becasue we want to combine into array instead of nesting 
     const swipedUsers = [
       currentUser.auth0UserId,
       ...currentUser.acceptedUsers,
@@ -32,6 +40,8 @@ router.get('/fetchusers/:currentUserId', async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+
+// register user's name, age, location
 
 router.post('/register', async (req, res) => {
 
@@ -62,6 +72,8 @@ router.post('/register', async (req, res) => {
     }
 });
 
+// fetching user Profile
+
 router.get('/profile/:auth0UserId', async (req, res) => {
   try {
       const user = await User.findOne({ auth0UserId: req.params.auth0UserId });
@@ -76,6 +88,8 @@ router.get('/profile/:auth0UserId', async (req, res) => {
       res.status(500).json({ error: "Error fetching profile" });
   }
 });
+
+// updating user's profile
 
 router.put('/update', async (req, res) => {
   const { auth0UserId, ...updates } = req.body;
@@ -153,6 +167,7 @@ const storeMatch = async (userAId, userBId) => {
   }
 };
 
+
 router.post('/checkMatch', async (req, res) => {
   const { userId, targetUserId } = req.body;
 
@@ -175,7 +190,7 @@ router.post('/checkMatch', async (req, res) => {
   }
 });
 
-
+// Retrieve all matches of current user
 router.get('/getmatches/:userId', async (req, res) => {
   const { userId } = req.params;
 
@@ -193,6 +208,7 @@ router.get('/getmatches/:userId', async (req, res) => {
   }
 });
 
+// Unmatch with user 
 
 router.post("/unmatch", async (req, res) => {
   const { userId, targetUserId } = req.body;
@@ -204,7 +220,7 @@ router.post("/unmatch", async (req, res) => {
   
     // filter operation, basically a for loop to keep everything except user 
     // with id == targetUserID 
-    
+
     user.matches = user.matches.filter((id) => id !== targetUserId);
     target.matches = target.matches.filter((id) => id !== userId);
 
