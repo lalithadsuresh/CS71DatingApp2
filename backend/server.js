@@ -33,8 +33,7 @@ startServer();
 // get request to '/' route to specified path
 // app.get() takes a callback function as an argument
 // express registers this route, stores callback function
-// and express listens (waits for requests) so when we visit
-// localhost:5001, express calls function(req, res)
+// and express listens (waits for requests) so when we visit express calls function(req, res)
 // req -> details about the request
 // res -> data sent back to client
 

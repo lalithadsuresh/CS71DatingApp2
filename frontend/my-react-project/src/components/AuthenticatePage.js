@@ -11,13 +11,15 @@ const AuthenticatePage = () => {
     const { isAuthenticated, user } = useAuth0();
     const navigate = useNavigate();
 
+    const BASE_URL = process.env.REACT_APP_BASE_URL;
+
     useEffect(() => {
         if (isAuthenticated && user) {
-            axios.post('http://localhost:5001/api/users/sync', {
+            axios.post(`${BASE_URL}/api/users/sync`, {
                 auth0UserId: user.sub,
             })
             .then((res) => {
-                axios.post('http://localhost:5001/api/users/registered', {
+                axios.post(`${BASE_URL}/api/users/registered`, {
                     auth0UserId: user.sub
                 })
                 .then(() => {

@@ -1,13 +1,17 @@
+// src/components/Homepage.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
 import './Main.css';
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Homepage = () => {
   const { user, isLoading } = useAuth0();
   const [users, setUsers] = useState([]);
   const [matches, setMatches] = useState([]);
   const [flippedCards, setFlippedCards] = useState({});
+
   const aboutYouOptions = [
     { label: "What are your hobbies?", name: "hobbies" },
     { label: "What are your dealbreakers?", name: "dealbreakers" },
@@ -26,7 +30,6 @@ const Homepage = () => {
     { label: "Favorite travel destination?", name: "travelDestination" },
     { label: "Which country/city do you want to visit next?", name: "nextCity" }
   ];
-  
 
   useEffect(() => {
     const fetchUsersDisplayed = async () => {
@@ -34,7 +37,9 @@ const Homepage = () => {
 
       try {
         const currentUserId = user.sub;
-        const res = await axios.get(`http://localhost:5001/api/profile/fetchusers/${currentUserId}`);
+        const res = await axios.get(
+          `${BASE_URL}/api/profile/fetchusers/${currentUserId}`
+        );
         setUsers(res.data || []);
       } catch (err) {
         console.error('Error fetching users:', err);
@@ -46,23 +51,29 @@ const Homepage = () => {
 
   const handleAccept = async (acceptedUser) => {
     try {
-      await axios.post('http://localhost:5001/api/profile/accept', {
-        userId: user.sub,
-        targetUserId: acceptedUser.auth0UserId,
-      });
+      await axios.post(
+        `${BASE_URL}/api/profile/accept`,
+        {
+          userId: user.sub,
+          targetUserId: acceptedUser.auth0UserId,
+        }
+      );
 
-      const matchRes = await axios.post('http://localhost:5001/api/profile/checkMatch', {
-        userId: user.sub,
-        targetUserId: acceptedUser.auth0UserId,
-      });
+      const matchRes = await axios.post(
+        `${BASE_URL}/api/profile/checkMatch`,
+        {
+          userId: user.sub,
+          targetUserId: acceptedUser.auth0UserId,
+        }
+      );
 
       if (matchRes.data.match) {
-        setMatches((prevMatches) => [...prevMatches, acceptedUser]);
+        setMatches((prev) => [...prev, acceptedUser]);
         console.log('MATCHED USERS');
       }
 
-      setUsers((prevUsers) =>
-        prevUsers.filter((u) => u.auth0UserId !== acceptedUser.auth0UserId)
+      setUsers((prev) =>
+        prev.filter((u) => u.auth0UserId !== acceptedUser.auth0UserId)
       );
     } catch (error) {
       console.error('Error accepting user:', error);
@@ -71,13 +82,16 @@ const Homepage = () => {
 
   const handleDecline = async (declinedUser) => {
     try {
-      await axios.post('http://localhost:5001/api/profile/decline', {
-        userId: user.sub,
-        targetUserId: declinedUser.auth0UserId,
-      });
+      await axios.post(
+        `${BASE_URL}/api/profile/decline`,
+        {
+          userId: user.sub,
+          targetUserId: declinedUser.auth0UserId,
+        }
+      );
 
-      setUsers((prevUsers) =>
-        prevUsers.filter((u) => u.auth0UserId !== declinedUser.auth0UserId)
+      setUsers((prev) =>
+        prev.filter((u) => u.auth0UserId !== declinedUser.auth0UserId)
       );
     } catch (error) {
       console.error('Error declining user:', error);
@@ -95,7 +109,9 @@ const Homepage = () => {
     <div className="page">
       <div className="container">
         <h1 className="titleMain">Unmasked</h1>
-        <p className="subtitle">Personality first, pictures second - unmask your true connection.</p>
+        <p className="subtitle">
+          Personality first, pictures second – unmask your true connection.
+        </p>
       </div>
 
       <div className="card-wrapper">
@@ -110,25 +126,27 @@ const Homepage = () => {
             return (
               <div
                 key={u.auth0UserId}
-                className={`profile-card flip-container ${isFlipped ? 'flipped' : ''}`}
+                className={`profile-card flip-container ${
+                  isFlipped ? 'flipped' : ''
+                }`}
                 onClick={() => toggleFlip(u.auth0UserId)}
               >
                 <div className="flipper">
                   {/* FRONT */}
                   <div className="front">
                     <h2>
-                      {u.name} - {u.pronouns}
+                      {u.name} – {u.pronouns}
                     </h2>
                     <div className="cardinfo">
                       <p className="cardtext">Age: {u.age}</p>
                       <p className="cardtext">Location: {u.location}</p>
-                      <p className="cardtext">Job: {u.job}</p> 
-                      <p className='cardtext'>{u.relationshipType}</p>
-                      <p className='cardtext'>Education: {u.education}</p>
-                      <p className='cardtext'>Sexuality: {u.datePreference}</p>
+                      <p className="cardtext">Job: {u.job}</p>
+                      <p className="cardtext">{u.relationshipType}</p>
+                      <p className="cardtext">Education: {u.education}</p>
+                      <p className="cardtext">Sexuality: {u.datePreference}</p>
                     </div>
-                      <h3>Bio:</h3>                      
-                      <p className="bio">{u.bio}</p>
+                    <h3>Bio:</h3>
+                    <p className="bio">{u.bio}</p>
                   </div>
 
                   {/* BACK */}
@@ -137,19 +155,23 @@ const Homepage = () => {
                       <h4 className="about-header">About {u.name}</h4>
                       <ul className="about-list">
                         {aboutYouOptions
-                          .filter(({ name }) => u[name] && u[name].trim() !== "") // Only show non-empty answers
-                          .slice(0, 5) // Limit to 5
+                          .filter(
+                            ({ name }) =>
+                              u[name] && u[name].trim() !== ''
+                          )
+                          .slice(0, 5)
                           .map(({ name, label }) => (
                             <li key={name} className="about-item">
                               <strong>{label}:</strong> {u[name]}
                             </li>
                           ))}
                       </ul>
-                      <img className="profile-img"
-                      src = {u.profileImage}>
-                      </img>
+                      <img
+                        className="profile-img"
+                        src={u.profileImage}
+                        alt={`${u.name}'s avatar`}
+                      />
                     </div>
-
 
                     <div className="card-buttons">
                       <button

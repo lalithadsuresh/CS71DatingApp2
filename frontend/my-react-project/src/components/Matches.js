@@ -4,6 +4,9 @@ import { useAuth0 } from '@auth0/auth0-react';
 import "./Main.css";
 
 const Matches = () => {
+
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+  
   const { user, isLoading } = useAuth0();
   const [matches, setMatches] = useState([]);
   const [flippedCards, setFlippedCards] = useState({});
@@ -26,13 +29,17 @@ const Matches = () => {
     { label: "Which country/city do you want to visit next?", name: "nextCity" }
   ];
   
+  
 
   const handleUnmatch = async (unmatchedUserId) => {
     try {
-      await axios.post("http://localhost:5001/api/profile/unmatch", {
-        userId: user.sub, // current user
-        targetUserId: unmatchedUserId, // the person to unmatch
-      });
+      await axios.post(
+        `${BASE_URL}/api/profile/unmatch`,
+        {
+          userId: user.sub,
+          targetUserId: unmatchedUserId,
+        }
+      );
   
       // Remove from local matches state
       setMatches((prev) =>
@@ -55,7 +62,9 @@ const Matches = () => {
       if (!user || isLoading) return;
 
       try {
-        const res = await axios.get(`http://localhost:5001/api/profile/getMatches/${user.sub}`);
+        const res = await axios.get(
+          `${BASE_URL}/api/profile/getMatches/${user.sub}`
+        );
         setMatches(res.data || []);
         console.log(res.data);
       } catch (err) {

@@ -38,10 +38,14 @@ const Profile = () => {
     { label: "Which country/city do you want to visit next?", name: "nextCity" }
   ];
 
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get(`http://localhost:5001/api/users/profile/${user?.sub}`);
+        const res = await axios.get(
+          `${BASE_URL}/api/users/profile/${user?.sub}`
+        );
         const profile = res.data;
 
         const aboutFields = {};
@@ -115,7 +119,10 @@ const Profile = () => {
         auth0UserId: user.sub
       };
       
-      const res = await axios.put("http://localhost:5001/api/users/update", updatedProfile);
+      const res = await axios.put(
+        `${BASE_URL}/api/users/update`,
+        updatedProfile
+      );
       alert("Changes saved!");
     } catch (err) {
       console.error("Error saving profile", err);

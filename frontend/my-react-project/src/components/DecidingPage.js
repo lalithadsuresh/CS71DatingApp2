@@ -8,11 +8,13 @@ const DecidingPage = () => {
     const { isAuthenticated, isLoading, user } = useAuth0();
     const navigate = useNavigate();
 
+    const BASE_URL = process.env.REACT_APP_BASE_URL;
+
     useEffect(() => {
 
         const checkRegistration = async () => {
             try {
-                const response = await axios.post('http://localhost:5001/api/users/registered', {
+                const response = await axios.post(`${BASE_URL}/api/users/registered`, {
                     auth0UserId: user.sub
                 });
                 const isRegistered = response.data.isRegistered;
